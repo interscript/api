@@ -1,0 +1,85 @@
+{
+  "name": "interscript-ts",
+  "version": "0.1.0",
+  "description": "Interscript TypeScript runtime — interoperable script conversion",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./ml": {
+      "types": "./dist/ml/index.d.ts",
+      "import": "./dist/ml/index.js"
+    },
+    "./loaders.node": {
+      "types": "./dist/loaders.node.d.ts",
+      "import": "./dist/loaders.node.js"
+    },
+    "./cli": "./dist/cli.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "interscript-ts": "./dist/cli.js"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:parity": "vitest run test/parity",
+    "test:coverage": "vitest run --coverage",
+    "test:bench": "vitest bench",
+    "lint": "eslint src test",
+    "format": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
+    "format:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
+    "gen:parity": "ruby scripts/gen-parity-fixtures.rb > test/fixtures/parity.json",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "transliteration",
+    "romanization",
+    "script-conversion",
+    "i18n",
+    "interscript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/interscript/interscript-ts.git"
+  },
+  "author": "Ribose Inc. <open.source@ribose.com>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/interscript/interscript-ts/issues"
+  },
+  "homepage": "https://github.com/interscript/interscript-ts#readme",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^4.1.10",
+    "eslint": "^10.8.0",
+    "eslint-config-prettier": "^10.1.0",
+    "onnxruntime-node": "^1.27.0",
+    "playwright": "^1.62.0",
+    "prettier": "^3.9.0",
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.65.0",
+    "vitest": "^4.1.0"
+  },
+  "dependencies": {
+    "fflate": "^0.8.3",
+    "js-yaml": "^5.3.0"
+  }
+}
