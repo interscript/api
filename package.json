@@ -34,7 +34,8 @@
   "dependencies": {
     "graphql-yoga": "^5.0.0",
     "hono": "^4.0.0",
-    "interscript-ts": "file:vendor/interscript-ts"
+    "interscript-ts": "file:vendor/interscript-ts",
+    "@interscript/api-worker": "git+https://github.com/interscript/api.git#a929c2f"
   },
   "peerDependencies": {
     "interscript-ts": "file:../interscript-ts"
