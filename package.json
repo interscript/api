@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "description": "Interscript API software \u2014 GraphQL API for transliteration on Cloudflare Workers (or any Workers-compatible runtime). Deploy your own endpoint: see README.",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist/src/index.d.ts",
+      "default": "./dist/src/index.js"
     },
     "./maps": {
-      "types": "./maps/index.d.ts",
-      "default": "./maps/index.js"
+      "types": "./maps/manifest.d.ts",
+      "default": "./maps/manifest.js"
     }
   },
   "files": [

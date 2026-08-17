@@ -1,4 +1,4 @@
 node_modules/
-dist/
+# dist ships committed: git-dependent installs cannot run prepare
 coverage/
 .wrangler/
