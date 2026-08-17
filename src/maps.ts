@@ -45,10 +45,11 @@ export function detectableSystemCodes(): readonly SystemCode[] {
 export async function loadMap(assets: MapAssets, code: SystemCode): Promise<CompiledMap> {
   const cached = cache.get(code)
   if (cached) return cached
-  // The Workers ASSETS binding requires an absolute URL; the host is
-  // ignored (routing is path-only within the binding).
+  // The Workers ASSETS binding requires an absolute URL (host ignored).
+  // The assets directory IS the maps directory — files serve at the
+  // root, so no /maps/ prefix.
   const response = await assets.fetch(
-    new Request(`https://assets.internal/maps/${code}.json`),
+    new Request(`https://assets.internal/${code}.json`),
   )
   if (!response.ok) {
     throw new MapNotFoundError(code)
