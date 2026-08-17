@@ -29,7 +29,7 @@ const addressable = systemCodes.filter((code) => !LIBRARIES.has(code))
 const detectable = addressable.filter((code) => !ML_BACKED.has(code))
 
 export interface MapAssets {
-  fetch(url: string): Promise<Response>
+  fetch(input: RequestInfo): Promise<Response>
 }
 
 const cache = new Map<SystemCode, CompiledMap>()
@@ -45,7 +45,11 @@ export function detectableSystemCodes(): readonly SystemCode[] {
 export async function loadMap(assets: MapAssets, code: SystemCode): Promise<CompiledMap> {
   const cached = cache.get(code)
   if (cached) return cached
-  const response = await assets.fetch(`/maps/${code}.json`)
+  // The Workers ASSETS binding requires an absolute URL; the host is
+  // ignored (routing is path-only within the binding).
+  const response = await assets.fetch(
+    new Request(`https://assets.internal/maps/${code}.json`),
+  )
   if (!response.ok) {
     throw new MapNotFoundError(code)
   }

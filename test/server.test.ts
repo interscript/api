@@ -10,8 +10,10 @@ import { app } from "../src/server.js"
 // Test double of the Workers ASSETS binding: the same maps directory the
 // deployer ships as static assets, served from the local filesystem.
 const assets = {
-  fetch: async (url: string): Promise<Response> => {
-    const code = url.replace("/maps/", "").replace(".json", "")
+  fetch: async (url: RequestInfo): Promise<Response> => {
+    const path = typeof url === "string" ? url : url.url
+    const name = path.substring(path.lastIndexOf("/") + 1)
+    const code = name.replace(".json", "")
     try {
       const body = readFileSync(`maps/${code}.json`)
       return new Response(body, { status: 200 })

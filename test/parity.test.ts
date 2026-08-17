@@ -10,8 +10,10 @@ import type { Env } from "../src/resolvers.js"
 
 const env: Env = {
   ASSETS: {
-    fetch: async (url: string): Promise<Response> => {
-      const code = url.replace("/maps/", "").replace(".json", "")
+    fetch: async (url: RequestInfo): Promise<Response> => {
+      const path = typeof url === "string" ? url : url.url
+      const name = path.substring(path.lastIndexOf("/") + 1)
+      const code = name.replace(".json", "")
       try {
         return new Response(readFileSync(`maps/${code}.json`), { status: 200 })
       } catch {

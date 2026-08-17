@@ -9,7 +9,9 @@ import { app } from "../src/server.js";
 const env = {
     ASSETS: {
         fetch: async (url) => {
-            const code = url.replace("/maps/", "").replace(".json", "");
+            const path = typeof url === "string" ? url : url.url;
+            const name = path.substring(path.lastIndexOf("/") + 1);
+            const code = name.replace(".json", "");
             try {
                 return new Response(readFileSync(`maps/${code}.json`), { status: 200 });
             }

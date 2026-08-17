@@ -10,7 +10,9 @@ import { app } from "../src/server.js";
 // deployer ships as static assets, served from the local filesystem.
 const assets = {
     fetch: async (url) => {
-        const code = url.replace("/maps/", "").replace(".json", "");
+        const path = typeof url === "string" ? url : url.url;
+        const name = path.substring(path.lastIndexOf("/") + 1);
+        const code = name.replace(".json", "");
         try {
             const body = readFileSync(`maps/${code}.json`);
             return new Response(body, { status: 200 });

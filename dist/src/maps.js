@@ -31,7 +31,9 @@ export async function loadMap(assets, code) {
     const cached = cache.get(code);
     if (cached)
         return cached;
-    const response = await assets.fetch(`/maps/${code}.json`);
+    // The Workers ASSETS binding requires an absolute URL; the host is
+    // ignored (routing is path-only within the binding).
+    const response = await assets.fetch(new Request(`https://assets.internal/maps/${code}.json`));
     if (!response.ok) {
         throw new MapNotFoundError(code);
     }

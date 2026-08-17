@@ -10,7 +10,7 @@
  */
 import { type CompiledMap, type SystemCode } from "interscript-ts";
 export interface MapAssets {
-    fetch(url: string): Promise<Response>;
+    fetch(input: RequestInfo): Promise<Response>;
 }
 export declare function bundledSystemCodes(): readonly SystemCode[];
 export declare function detectableSystemCodes(): readonly SystemCode[];
