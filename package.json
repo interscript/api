@@ -28,7 +28,8 @@
     "format": "prettier --write src test scripts",
     "format:check": "prettier --check src test scripts",
     "typecheck": "tsc --noEmit",
-    "fixtures:record": "node scripts/record-fixtures.mjs"
+    "fixtures:record": "node scripts/record-fixtures.mjs",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "graphql-yoga": "^5.0.0",
