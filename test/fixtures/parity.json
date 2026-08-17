@@ -1,0 +1,1265 @@
+[
+  {
+    "kind": "transliterate",
+    "systemCode": "alalc-kat-Geor-Latn-1997",
+    "input": "ქართული",
+    "result": {
+      "data": {
+        "transliterate": "kʻartʻuli"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "bgnpcgn-kat-Geor-Latn-2009",
+    "input": "ქართული",
+    "result": {
+      "data": {
+        "transliterate": "kartuli"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "bgnpcgn-deu-Latn-Latn-2000",
+    "input": "Tschüß!",
+    "result": {
+      "data": {
+        "transliterate": "Tschueß!"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "odni-rus-Cyrl-Latn-2015",
+    "input": "привет мир",
+    "result": {
+      "data": {
+        "transliterate": "privet mir"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "icao-ukr-Cyrl-Latn-9303",
+    "input": "Київ",
+    "result": {
+      "data": {
+        "transliterate": "Kyiv"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "alalc-amh-Ethi-Latn-2011",
+    "input": "ኢትዮጵያ",
+    "result": {
+      "data": {
+        "transliterate": "ʼiteyop̣eyā"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "un-tam-Taml-Latn-1972",
+    "input": "தமிழ்",
+    "result": {
+      "data": {
+        "transliterate": "tamil̮"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "alalc-kat-Geor-Latn-1997",
+    "input": "ᲥᲐᲠᲗᲣᲚᲘ",
+    "result": {
+      "data": {
+        "transliterate": "ᲥᲐᲠᲗᲣᲚᲘ"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "acadsin-zho-Hani-Latn-2002",
+    "input": "阜康",
+    "result": {
+      "data": {
+        "transliterate": "Fukang"
+      }
+    }
+  },
+  {
+    "kind": "transliterate",
+    "systemCode": "sac-zho-Hans-Latn-1979",
+    "input": "中国",
+    "result": {
+      "data": {
+        "transliterate": "zhong1guo2"
+      }
+    }
+  },
+  {
+    "kind": "detect",
+    "input": "ქართული",
+    "output": "kʻartʻuli",
+    "result": {
+      "data": {
+        "detect": [
+          {
+            "mapName": "alalc-kat-Geor-Latn-1997",
+            "distance": 0
+          },
+          {
+            "mapName": "alalc-kat-Geor-Latn-2011",
+            "distance": 0
+          },
+          {
+            "mapName": "bgnpcgn-kat-Geor-Latn-1981",
+            "distance": 2
+          },
+          {
+            "mapName": "bgnpcgn-kat-Geor-Latn-2009",
+            "distance": 2
+          },
+          {
+            "mapName": "din-kat-Geor-Latn-32707-2010",
+            "distance": 2
+          },
+          {
+            "mapName": "ggg-kat-Geor-Latn-2002",
+            "distance": 2
+          },
+          {
+            "mapName": "iso-kat-Geor-Latn-9984-1996",
+            "distance": 2
+          },
+          {
+            "mapName": "odni-kat-Geor-Latn-2015",
+            "distance": 2
+          },
+          {
+            "mapName": "acadsin-zho-Hani-Latn-2002",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-amh-Ethi-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-amh-Ethi-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ara-Arab-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-asm-Deva-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-asm-Deva-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-aze-Arab-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-aze-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-bel-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ben-Beng-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ben-Beng-Latn-2017",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-bul-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-div-Thaa-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-div-Thaa-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ell-Grek-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ell-Grek-Latn-2010",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-fas-Arab-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-guj-Gujr-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-guj-Gujr-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-hin-Deva-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-hin-Deva-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-kan-Kana-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-kan-Kana-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-kat-Geok-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-kat-Geok-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-kor-Hang-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-mal-Mlym-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-mal-Mlym-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-mar-Deva-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-mar-Deva-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-mkd-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-mkd-Cyrl-Latn-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-mon-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ori-Orya-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ori-Orya-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-pan-Guru-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-pan-Guru-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-pli-Deva-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-pra-Deva-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-rus-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-rus-Cyrl-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-san-Deva-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-sin-Sinh-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-sin-Sinh-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-srp-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-srp-Cyrl-Latn-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-tam-Taml-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-tam-Taml-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-tel-Telu-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-tel-Telu-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-tir-Ethi-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-tir-Ethi-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ukr-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "alalc-ukr-Cyrl-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "apcbg-bul-Cyrl-Latn-1995",
+            "distance": 9
+          },
+          {
+            "mapName": "az-aze-Cyrl-Latn-1939",
+            "distance": 9
+          },
+          {
+            "mapName": "az-aze-Cyrl-Latn-1958",
+            "distance": 9
+          },
+          {
+            "mapName": "bas-rus-Cyrl-Latn-2017-bss",
+            "distance": 9
+          },
+          {
+            "mapName": "bas-rus-Cyrl-Latn-2017-oss",
+            "distance": 9
+          },
+          {
+            "mapName": "bgn-jpn-Hrkt-Latn-1962",
+            "distance": 9
+          },
+          {
+            "mapName": "bgn-kor-Hang-Latn-1943",
+            "distance": 9
+          },
+          {
+            "mapName": "bgn-kor-Kore-Latn-1943",
+            "distance": 9
+          },
+          {
+            "mapName": "bgna-bul-Cyrl-Latn-2006",
+            "distance": 9
+          },
+          {
+            "mapName": "bgna-bul-Cyrl-Latn-2009",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-amh-Ethi-Latn-1967",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-ara-Arab-Latn-1956",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-arm-Armn-Latn-1981",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-aze-Cyrl-Latn-1993",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-bak-Cyrl-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-bal-Arab-Latn-2008",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-bel-Cyrl-Latn-1979",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-bul-Cyrl-Latn-1952",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-bul-Cyrl-Latn-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-che-Cyrl-Latn-2008",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-deu-Latn-Latn-2000",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-div-Thaa-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-div-Thaa-Latn-1988",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-ell-Grek-Latn-1962",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-ell-Grek-Latn-1996",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-fao-Latn-Latn-1964",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-fao-Latn-Latn-1968",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-fas-Arab-Latn-1956",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-isl-Latn-Latn-1964",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-isl-Latn-Latn-1968",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-jpn-Hrkt-Latn-1976",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-kaz-Cyrl-Latn-1979",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-kir-Cyrl-Latn-1979",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-kor-Hang-Latn-kn-1945",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-kor-Hang-Latn-rok-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-kor-Kore-Latn-rok-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-kur-Arab-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-mkd-Cyrl-Latn-1981",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-mkd-Cyrl-Latn-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-mon-Cyrl-Latn-1964",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-nep-Deva-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-per-Arab-Latn-1958",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-prs-Arab-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-prs-Arab-Latn-yaghoubi",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-pus-Arab-Latn-1968",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-ron-Cyrl-Latn-2002",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-rue-Cyrl-Latn-2016",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-rus-Cyrl-Latn-1947",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-sme-Latn-Latn-1984",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-srp-Cyrl-Latn-1962",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-srp-Cyrl-Latn-2005",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-tat-Cyrl-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-tgk-Cyrl-Latn-1994",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-tir-Ethi-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-ukr-Cyrl-Latn-1965",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-ukr-Cyrl-Latn-2019",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-urd-Arab-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-uzb-Cyrl-Latn-1979",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-uzb-Cyrl-Latn-2000",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-zho-Hans-Latn-1979",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-asm-Beng-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-ben-Beng-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-dev-Deva-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-guj-Gujr-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-kan-Kana-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-mlm-Mlym-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-ori-Orya-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-pnj-Guru-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-tel-Telu-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "bis-tml-Taml-Latn-13194-1991",
+            "distance": 9
+          },
+          {
+            "mapName": "by-bel-Cyrl-Latn-1998",
+            "distance": 9
+          },
+          {
+            "mapName": "by-bel-Cyrl-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "din-grc-Grek-Latn-31634-2011-t1",
+            "distance": 9
+          },
+          {
+            "mapName": "din-hin-Deva-Latn-33904-2018",
+            "distance": 9
+          },
+          {
+            "mapName": "din-mar-Deva-Latn-33904-2018",
+            "distance": 9
+          },
+          {
+            "mapName": "din-nep-Deva-Latn-33904-2018",
+            "distance": 9
+          },
+          {
+            "mapName": "din-pli-Deva-Latn-33904-2018",
+            "distance": 9
+          },
+          {
+            "mapName": "din-pra-Deva-Latn-33904-2018",
+            "distance": 9
+          },
+          {
+            "mapName": "din-san-Deva-Latn-33904-2018",
+            "distance": 9
+          },
+          {
+            "mapName": "din-tam-Taml-Latn-33903-2016",
+            "distance": 9
+          },
+          {
+            "mapName": "dos-nep-Deva-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "elot-ell-Grek-Latn-743-1982-tl",
+            "distance": 9
+          },
+          {
+            "mapName": "elot-ell-Grek-Latn-743-1982-ts",
+            "distance": 9
+          },
+          {
+            "mapName": "elot-ell-Grek-Latn-743-2001-tl",
+            "distance": 9
+          },
+          {
+            "mapName": "elot-ell-Grek-Latn-743-2001-ts",
+            "distance": 9
+          },
+          {
+            "mapName": "gki-bel-Cyrl-Latn-1992",
+            "distance": 9
+          },
+          {
+            "mapName": "gki-bel-Cyrl-Latn-2000",
+            "distance": 9
+          },
+          {
+            "mapName": "gost-rus-Cyrl-Latn-16876-71-1983",
+            "distance": 9
+          },
+          {
+            "mapName": "gost-rus-Cyrl-Latn-7.79-2000-2002",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-bel-Cyrl-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-bul-Cyrl-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-fas-Arab-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-heb-Hebr-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-mkd-Cyrl-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-rus-Cyrl-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-srp-Cyrl-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "icao-ukr-Cyrl-Latn-9303",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-ara-Arab-Latn-233-1984",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-ara-Arab-Latn-233-2-1993",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-asm-Beng-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-ben-Beng-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-ell-Grek-Latn-843-1997-t1",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-ell-Grek-Latn-843-1997-t2",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-guj-Gujr-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-hin-Deva-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-inc-Deva-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-jpn-Hrkt-Latn-3602-1989",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-kan-Kana-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-kor-Hang-Latn-1996-method1",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-kor-Hang-Latn-1996-method2",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-mal-Mlym-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-mar-Deva-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-nep-Deva-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-ori-Orya-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-pan-Guru-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-pli-Beng-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-pli-Deva-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-pli-Sinh-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-pli-Thai-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-pra-Deva-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-prs-Arab-Latn-233-3-1999",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-rus-Cyrl-Latn-9-1995",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-san-Deva-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-tam-Taml-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-tel-Telu-Latn-15919-2001",
+            "distance": 9
+          },
+          {
+            "mapName": "iso-tha-Thai-Latn-11940-1998",
+            "distance": 9
+          },
+          {
+            "mapName": "kp-kor-Hang-Latn-2002",
+            "distance": 9
+          },
+          {
+            "mapName": "lshk-yue-Hani-Latn-jyutping-1993",
+            "distance": 9
+          },
+          {
+            "mapName": "masm-mon-Cyrl-Latn-5217-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "masm-mon-Latn-Cyrl-5217-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "mext-jpn-Hrkt-Latn-1954",
+            "distance": 9
+          },
+          {
+            "mapName": "moct-kor-Hang-Latn-2000",
+            "distance": 9
+          },
+          {
+            "mapName": "mofa-jpn-Hrkt-Latn-1989",
+            "distance": 9
+          },
+          {
+            "mapName": "mv-div-Thaa-Latn-1987",
+            "distance": 9
+          },
+          {
+            "mapName": "mvd-bel-Cyrl-Latn-2008",
+            "distance": 9
+          },
+          {
+            "mapName": "mvd-bel-Cyrl-Latn-2010",
+            "distance": 9
+          },
+          {
+            "mapName": "mvd-rus-Cyrl-Latn-2008",
+            "distance": 9
+          },
+          {
+            "mapName": "mvd-rus-Cyrl-Latn-2010",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-ara-Arab-Latn-2004",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-ara-Arab-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-aze-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-bel-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-bul-Cyrl-Latn-2005",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-bul-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-che-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-fas-Arab-Latn-2004",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-fas-Arab-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-hin-Deva-Latn-2004",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-hin-Deva-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-kaz-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-kir-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-kor-Hang-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-mkd-Cyrl-Latn-2005",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-mkd-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-prs-Arab-Latn-2004",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-prs-Arab-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-pus-Arab-Latn-2011",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-rus-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-srp-Cyrl-Latn-2005",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-srp-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-tat-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-tgk-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-tuk-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-uig-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-ukr-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-urd-Arab-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "odni-uzb-Cyrl-Latn-2015",
+            "distance": 9
+          },
+          {
+            "mapName": "sac-zho-Hans-Latn-1979",
+            "distance": 9
+          },
+          {
+            "mapName": "sasm-mon-Mong-Latn-general-1978",
+            "distance": 9
+          },
+          {
+            "mapName": "sasm-mon-Mong-Latn-phonetic-1978",
+            "distance": 9
+          },
+          {
+            "mapName": "ses-ara-Arab-Latn-1930",
+            "distance": 9
+          },
+          {
+            "mapName": "stategeocadastre-ukr-Cyrl-Latn-1993",
+            "distance": 9
+          },
+          {
+            "mapName": "ua-ukr-Cyrl-Latn-1996",
+            "distance": 9
+          },
+          {
+            "mapName": "ua-ukr-Cyrl-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "ua-ukr-Cyrl-Latn-2010",
+            "distance": 9
+          },
+          {
+            "mapName": "un-amh-Ethi-Latn-2016",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ara-Arab-Latn-1971",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ara-Arab-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ara-Arab-Latn-2017",
+            "distance": 9
+          },
+          {
+            "mapName": "un-asm-Beng-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-bel-Cyrl-Latn-2007",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ben-Beng-Latn-2016",
+            "distance": 9
+          },
+          {
+            "mapName": "un-bul-Cyrl-Latn-1977",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ell-Grek-Latn-1987-phonetic",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ell-Grek-Latn-1987-tl",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ell-Grek-Latn-1987-ts",
+            "distance": 9
+          },
+          {
+            "mapName": "un-guj-Gujr-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-hin-Deva-Latn-2016",
+            "distance": 9
+          },
+          {
+            "mapName": "un-kan-Kana-Latn-2016",
+            "distance": 9
+          },
+          {
+            "mapName": "un-mal-Mlym-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-mar-Deva-Latn-2016",
+            "distance": 9
+          },
+          {
+            "mapName": "un-mkd-Cyrl-Latn-1977",
+            "distance": 9
+          },
+          {
+            "mapName": "un-mon-Mong-Latn-general-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "un-mon-Mong-Latn-phonetic-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "un-nep-Deva-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-nep-Deva-Latn-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ori-Orya-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-pan-Guru-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-prs-Arab-Latn-1967",
+            "distance": 9
+          },
+          {
+            "mapName": "un-rus-Cyrl-Latn-1987",
+            "distance": 9
+          },
+          {
+            "mapName": "un-sin-Sinh-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-srp-Cyrl-Latn-1997",
+            "distance": 9
+          },
+          {
+            "mapName": "un-tam-Taml-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-tel-Telu-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ukr-Cyrl-Latn-1998",
+            "distance": 9
+          },
+          {
+            "mapName": "un-ukr-Cyrl-Latn-2012",
+            "distance": 9
+          },
+          {
+            "mapName": "un-urd-Arab-Latn-1972",
+            "distance": 9
+          },
+          {
+            "mapName": "var-amh-Ethi-Latn-eae-2003",
+            "distance": 9
+          },
+          {
+            "mapName": "var-gez-Ethi-Latn-eae-2003",
+            "distance": 9
+          },
+          {
+            "mapName": "var-hin-Deva-Latn-hunterian-1872",
+            "distance": 9
+          },
+          {
+            "mapName": "var-jpn-Hrkt-Latn-hepburn-1886",
+            "distance": 9
+          },
+          {
+            "mapName": "var-jpn-Hrkt-Latn-hepburn-1954",
+            "distance": 9
+          },
+          {
+            "mapName": "var-kor-Hang-Hang-jamo",
+            "distance": 9
+          },
+          {
+            "mapName": "var-kor-Hang-Latn-mr-1939",
+            "distance": 9
+          },
+          {
+            "mapName": "var-kor-Kore-Hang-2013",
+            "distance": 9
+          },
+          {
+            "mapName": "var-kor-Kore-Latn-mr-1939",
+            "distance": 9
+          },
+          {
+            "mapName": "var-mar-Deva-Latn-hunterian-1872",
+            "distance": 9
+          },
+          {
+            "mapName": "var-mon-Mong-Latn-1930",
+            "distance": 9
+          },
+          {
+            "mapName": "var-mon-Mong-Latn-lessing",
+            "distance": 9
+          },
+          {
+            "mapName": "var-mon-Mong-Latn-vpmc",
+            "distance": 9
+          },
+          {
+            "mapName": "var-pra-Deva-Latn-iast-1912",
+            "distance": 9
+          },
+          {
+            "mapName": "var-san-Deva-Latn-iast-1912",
+            "distance": 9
+          },
+          {
+            "mapName": "hk-yue-Hani-Latn-1888",
+            "distance": 13
+          },
+          {
+            "mapName": "var-zho-Hani-Latn-wd-1979",
+            "distance": 13
+          }
+        ]
+      }
+    }
+  },
+  {
+    "kind": "info",
+    "result": {
+      "data": {
+        "info": "{\"version\":\"v2.3.3\",\"interscript_version\":\"2.4.3\"}"
+      }
+    }
+  }
+]

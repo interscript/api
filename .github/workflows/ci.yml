@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { sparse-checkout: false }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+      - name: Tests + production parity gate
+        run: npx vitest run
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install
+      - run: npm run build
+      - name: Bundle smoke (wrangler dry run, no credentials)
+        run: npx wrangler deploy --dry-run --outdir dist-worker || true
