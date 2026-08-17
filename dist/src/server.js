@@ -31,7 +31,6 @@ export const app = new Hono();
 app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }));
 app.all("*", (c) => {
     const env = c.env;
-    console.log("C.ENV:", env && Object.keys(env));
     if (env?.ASSETS)
         setAssets(env.ASSETS);
     // executionCtx exists only in a real Workers runtime; without it

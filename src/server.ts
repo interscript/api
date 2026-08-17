@@ -42,7 +42,6 @@ app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }))
 
 app.all("*", (c) => {
   const env = c.env as Env | undefined
-  console.log("C.ENV:", env && Object.keys(env))
   if (env?.ASSETS) setAssets(env.ASSETS)
   // executionCtx exists only in a real Workers runtime; without it
   // (tests, edge runtimes) yoga runs unbatched, which is fine here.

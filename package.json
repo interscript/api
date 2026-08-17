@@ -21,7 +21,7 @@
     "schema"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && esbuild src/index.ts --bundle --platform=neutral --format=esm --minify --outfile=dist/src/index.js --external:node:* --external:hono --external:graphql-yoga --external:@whatwg-node/fetch",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint src test",
@@ -31,17 +31,14 @@
     "fixtures:record": "node scripts/record-fixtures.mjs"
   },
   "dependencies": {
-    "graphql-yoga": "^5.0.0",
     "hono": "^4.0.0",
-    "interscript-ts": "file:vendor/interscript-ts"
-  },
-  "peerDependencies": {
-    "interscript-ts": "file:../interscript-ts"
+    "graphql-yoga": "^5.0.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260811.1",
     "@eslint/js": "^9.0.0",
     "@types/node": "^26.2.0",
+    "esbuild": "^0.28.2",
     "prettier": "^3.0.0",
     "typescript": "^5.6.0",
     "typescript-eslint": "^8.0.0",
