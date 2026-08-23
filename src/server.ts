@@ -13,6 +13,7 @@ import {
   detectResolver,
   info,
   setAssets,
+  setMl,
   systemCodesResolver,
   transliterateResolver,
   type Env,
@@ -45,9 +46,10 @@ app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }))
 // catch-all so /v1/* and / serve REST; everything else stays GraphQL.
 app.route("/", rest)
 
-app.all("*", (c) => {
+app.all("*", async (c) => {
   const env = c.env as Env | undefined
   if (env?.ASSETS) setAssets(env.ASSETS)
+  setMl(env?.ML_ENDPOINT, env?.ML_TOKEN)
   // executionCtx exists only in a real Workers runtime; without it
   // (tests, edge runtimes) yoga runs unbatched, which is fine here.
   let executionCtx: unknown
@@ -56,8 +58,30 @@ app.all("*", (c) => {
   } catch {
     executionCtx = undefined
   }
+  let request = c.req.raw
+  // Legacy clients (the interscript.org demo) POST the GraphQL
+  // document as the raw body with a non-JSON content type; the old
+  // Lambda accepted that, so wrap it as {query} for Yoga.
+  const contentType = (request.headers.get("content-type") ?? "").toLowerCase()
+  if (request.method === "POST" && !contentType.includes("application/json")) {
+    const body = await request.text()
+    let isJson = false
+    try {
+      JSON.parse(body)
+      isJson = true
+    } catch {
+      // not JSON — a raw GraphQL document
+    }
+    if (body.trim() && !isJson) {
+      request = new Request(request.url, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ query: body }),
+      })
+    }
+  }
   return yoga.fetch(
-    c.req.raw as unknown as Parameters<typeof yoga.fetch>[0],
+    request as unknown as Parameters<typeof yoga.fetch>[0],
     c.env as never,
     executionCtx as never,
   )

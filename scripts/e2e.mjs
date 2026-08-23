@@ -163,6 +163,36 @@ console.log(`E2E against ${BASE}\n`)
   check("graphql transliterate parity", tr.data.transliterate === "kʻartʻuli")
 }
 
+// --- legacy wire format (the interscript.org demo client) ---
+{
+  const res = await fetch(`${BASE}/prod`, {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: `{ transliterate(systemCode: "alalc-kat-Geor-Latn-1997", input: "ქართული") }`,
+  })
+  check("legacy raw-body graphql 200", res.status === 200, `status ${res.status}`)
+  const body = await res.json()
+  check(
+    "legacy raw-body transliterate",
+    body.data?.transliterate === "kʻartʻuli",
+    JSON.stringify(body).slice(0, 120),
+  )
+}
+{
+  // The demo's Diacritize button: rababa system code routes to ML inference.
+  const res = await fetch(`${BASE}/prod`, {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: `{ transliterate(systemCode: "var-ara-Arab-Arab-rababa", input: "مدرسة جميلة") }`,
+  })
+  const body = await res.json()
+  check(
+    "rababa route diacritizes",
+    /[ً-ْ]/.test(String(body.data?.transliterate ?? "")),
+    JSON.stringify(body).slice(0, 120),
+  )
+}
+
 // --- CORS ---
 {
   const res = await fetch(`${BASE}/v1/info`, { method: "OPTIONS" })

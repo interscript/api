@@ -16,14 +16,18 @@
  * compatibility with the Ruby API's {proxy+} behavior).
  */
 import { Hono } from "hono"
-import { API_VERSION, detectResolver, setAssets, transliterateResolver, type Env } from "./resolvers.js"
+import {
+  API_VERSION,
+  detectResolver,
+  setAssets,
+  transliterateResolver,
+  type Env,
+} from "./resolvers.js"
 import { InputTooLongError, MapNotFoundError } from "./errors.js"
-import { LIMITS } from "./limits.js"
+import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js"
 import { bundledSystemCodes } from "./engine.js"
 import { getModel, listModels, MODELS_INDEX_VERSION } from "./models.js"
 import { OPENAPI } from "./openapi.js"
-
-const INFER_TIMEOUT_MS = 120_000
 
 function errorResponse(status: number, code: string, message: string) {
   return Response.json({ error: { code, message } }, { status })
@@ -125,9 +129,7 @@ rest.post("/v1/detect", async (c) => {
   return c.json({ count: results.length, results })
 })
 
-rest.get("/v1/models", (c) =>
-  c.json({ count: listModels().length, models: listModels() }),
-)
+rest.get("/v1/models", (c) => c.json({ count: listModels().length, models: listModels() }))
 
 rest.get("/v1/models/:id", (c) => {
   const model = getModel(c.req.param("id"))

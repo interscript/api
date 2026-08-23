@@ -2,3 +2,4 @@
 export const LIMITS = {
     input_max_size: 1_000_000,
 };
+export const INFER_TIMEOUT_MS = 120_000;

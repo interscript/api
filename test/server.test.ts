@@ -90,6 +90,82 @@ describe("detect", () => {
   })
 })
 
+describe("legacy wire format", () => {
+  // The interscript.org demo POSTs the GraphQL document as the raw
+  // body with a urlencoded content type; the old Lambda accepted it.
+  it("accepts a raw query body with urlencoded content type", async () => {
+    const response = await app.request(
+      "https://example.org/prod",
+      {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: `{ transliterate(systemCode: "alalc-kat-Geor-Latn-1997", input: "ქართული") }`,
+      },
+      env,
+    )
+    expect(response.status).toBe(200)
+    const parsed = (await response.json()) as { data?: { transliterate?: string } }
+    expect(parsed.data?.transliterate).toBe("kʻartʻuli")
+  })
+
+  it("accepts a raw query body with the application/graphql content type", async () => {
+    const response = await app.request(
+      "https://example.org/graphql",
+      {
+        method: "POST",
+        headers: { "content-type": "application/graphql" },
+        body: `{ detect(input: "ქართული", output: "kʻartʻuli") { mapName } }`,
+      },
+      env,
+    )
+    expect(response.status).toBe(200)
+    const parsed = (await response.json()) as { data?: { detect?: { mapName: string }[] } }
+    expect(parsed.data?.detect?.[0]?.mapName).toContain("kat")
+  })
+
+  it("still accepts JSON bodies", async () => {
+    const response = await query(JSON.stringify({ query: "{ info }" }))
+    expect(response.status).toBe(200)
+    const parsed = (await response.json()) as { data?: { info?: string } }
+    expect(JSON.parse(parsed.data?.info ?? "{}")["version"]).toMatch(/^3\./)
+  })
+})
+
+describe("rababa routing", () => {
+  it("proxies the legacy rababa system code to the ML service", async () => {
+    const originalFetch = globalThis.fetch
+    let called: { url: string; body: unknown; key: string | null } | undefined
+    globalThis.fetch = (async (url: unknown, init?: RequestInit) => {
+      called = {
+        url: String(url),
+        body: JSON.parse(String(init?.body)),
+        key: (init?.headers as Record<string, string>)["x-api-key"] ?? null,
+      }
+      return new Response(JSON.stringify({ output: "مَدْرَسَة" }), { status: 200 })
+    }) as typeof fetch
+    try {
+      const response = await app.request(
+        "https://example.org/graphql",
+        {
+          method: "POST",
+          headers: GRAPHQL,
+          body: JSON.stringify({
+            query: `{ transliterate(systemCode: "var-ara-Arab-Arab-rababa", input: "مدرسة") }`,
+          }),
+        },
+        { ASSETS: assets, ML_ENDPOINT: "https://ml.example", ML_TOKEN: "secret-token" },
+      )
+      const parsed = (await response.json()) as { data?: { transliterate?: string } }
+      expect(parsed.data?.transliterate).toBe("مَدْرَسَة")
+      expect(called?.url).toBe("https://ml.example/infer")
+      expect(called?.body).toEqual({ model: "ara-diac-1.0", input: "مدرسة" })
+      expect(called?.key).toBe("secret-token")
+    } finally {
+      globalThis.fetch = originalFetch
+    }
+  })
+})
+
 describe("CORS", () => {
   it("answers preflight", async () => {
     const response = await app.request(
