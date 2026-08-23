@@ -1,0 +1,1 @@
+{"version":3,"file":"onnx-web.d.ts","sourceRoot":"","sources":["../../../src/ml/session/onnx-web.ts"],"names":[],"mappings":"AAAA;;;;;;;;GAQG;AAEH,OAAO,KAAK,EACV,gBAAgB,EAKjB,MAAM,aAAa,CAAA;AAEpB,MAAM,WAAW,iBAAiB;IAChC;;;;;;;OAOG;IACH,MAAM,CAAC,EAAE,OAAO,CAAA;CACjB;AAqGD,wBAAsB,gBAAgB,CACpC,SAAS,EAAE,WAAW,GAAG,UAAU,EACnC,IAAI,GAAE,iBAAsB,GAC3B,OAAO,CAAC,gBAAgB,CAAC,CAE3B"}
