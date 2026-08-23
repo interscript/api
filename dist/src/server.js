@@ -8,6 +8,7 @@ import { createYoga, createSchema } from "graphql-yoga";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { typeDefs } from "./schema.js";
+import { rest } from "./rest.js";
 import { detectResolver, info, setAssets, systemCodesResolver, transliterateResolver, } from "./resolvers.js";
 const yoga = createYoga({
     schema: createSchema({
@@ -29,6 +30,9 @@ const yoga = createYoga({
 });
 export const app = new Hono();
 app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }));
+// REST v1 (OpenAPI: GET /openapi.json) — mounted before the GraphQL
+// catch-all so /v1/* and / serve REST; everything else stays GraphQL.
+app.route("/", rest);
 app.all("*", (c) => {
     const env = c.env;
     if (env?.ASSETS)

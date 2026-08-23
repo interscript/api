@@ -1,6 +1,6 @@
 {
   "name": "@interscript/api-worker",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Interscript API software \u2014 GraphQL API for transliteration on Cloudflare Workers (or any Workers-compatible runtime). Deploy your own endpoint: see README.",
   "type": "module",
   "main": "./dist/src/index.js",
@@ -28,7 +28,8 @@
     "format": "prettier --write src test scripts",
     "format:check": "prettier --check src test scripts",
     "typecheck": "tsc --noEmit",
-    "fixtures:record": "node scripts/record-fixtures.mjs"
+    "fixtures:record": "node scripts/record-fixtures.mjs",
+    "gen:models": "node scripts/gen-models.mjs"
   },
   "dependencies": {
     "hono": "^4.0.0",
