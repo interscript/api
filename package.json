@@ -1,7 +1,7 @@
 {
   "name": "@interscript/api-worker",
   "version": "1.0.0",
-  "description": "Interscript API software \u2014 GraphQL API for transliteration on Cloudflare Workers (or any Workers-compatible runtime). Deploy your own endpoint: see README.",
+  "description": "Interscript API software — GraphQL API for transliteration on Cloudflare Workers (or any Workers-compatible runtime). Deploy your own endpoint: see README.",
   "type": "module",
   "main": "./dist/src/index.js",
   "types": "./dist/src/index.d.ts",
@@ -33,8 +33,9 @@
     "e2e": "node scripts/e2e.mjs"
   },
   "dependencies": {
+    "graphql-yoga": "^5.0.0",
     "hono": "^4.0.0",
-    "graphql-yoga": "^5.0.0"
+    "interscript-ts": "file:vendor/interscript-ts"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260811.1",
@@ -45,7 +46,8 @@
     "typescript": "^5.6.0",
     "typescript-eslint": "^8.0.0",
     "vitest": "^2.0.0",
-    "wrangler": "^4.0.0"
+    "wrangler": "^4.0.0",
+    "yaml": "^2.9.0"
   },
   "engines": {
     "node": ">=20"
