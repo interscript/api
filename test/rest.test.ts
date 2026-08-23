@@ -23,10 +23,18 @@ const env = { ASSETS: assets }
 const JSON_HEADERS = { "content-type": "application/json" }
 
 async function get(path: string, extra: Record<string, string> = {}): Promise<Response> {
-  return await app.request(`https://example.org${path}`, { headers: { ...JSON_HEADERS, ...extra } }, env)
+  return await app.request(
+    `https://example.org${path}`,
+    { headers: { ...JSON_HEADERS, ...extra } },
+    env,
+  )
 }
 
-async function post(path: string, body: unknown, extra: Record<string, string> = {}): Promise<Response> {
+async function post(
+  path: string,
+  body: unknown,
+  extra: Record<string, string> = {},
+): Promise<Response> {
   return await app.request(
     `https://example.org${path}`,
     { method: "POST", headers: { ...JSON_HEADERS, ...extra }, body: JSON.stringify(body) },
@@ -83,9 +91,7 @@ describe("REST maps", () => {
     expect(await ok.json()).toBeTruthy()
     const missing = await get("/v1/maps/does-not-exist")
     expect(missing.status).toBe(404)
-    expect(((await missing.json()) as { error: { code: string } }).error.code).toBe(
-      "map_not_found",
-    )
+    expect(((await missing.json()) as { error: { code: string } }).error.code).toBe("map_not_found")
   })
 })
 
