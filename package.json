@@ -29,7 +29,8 @@
     "format:check": "prettier --check src test scripts",
     "typecheck": "tsc --noEmit",
     "fixtures:record": "node scripts/record-fixtures.mjs",
-    "gen:models": "node scripts/gen-models.mjs"
+    "gen:models": "node scripts/gen-models.mjs",
+    "e2e": "node scripts/e2e.mjs"
   },
   "dependencies": {
     "hono": "^4.0.0",
