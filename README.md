@@ -80,3 +80,19 @@ ruby -e '... see scripts/build-maps.rb ...'
 `test/fixtures/parity.json` holds queries recorded from the production
 Ruby API; CI replays them against this implementation. Zero-diff is the
 release gate.
+
+
+## REST v1 (OpenAPI)
+
+REST endpoints serve alongside GraphQL (which remains at `POST /graphql`):
+
+- `GET /openapi.json` — the OpenAPI 3.1 document
+- `GET /v1/info` — version + capability summary
+- `GET /v1/maps` / `GET /v1/maps/{code}` — bundled transliteration systems
+- `POST /v1/transliterate` — `{system, input}` → `{output}`
+- `POST /v1/detect` — `{input, output}` → ranked systems
+- `GET /v1/models` / `GET /v1/models/{id}` — the neural model index (IMF v1, generated from interscript-ml's models.yaml via `npm run gen:models`)
+- `POST /v1/infer` — `{model, input}` → `{output}`; proxies to the
+  inference service configured with `ML_ENDPOINT` + `ML_TOKEN` env vars
+  (Interscript runs `src/api/inference.py` on Modal: the same
+  parity-verified ONNX decode that gates every release)
