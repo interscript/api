@@ -5,7 +5,7 @@
 import { MapNotFoundError as EngineMapNotFoundError } from "interscript-ts"
 import { detect, transliterate } from "./engine.js"
 import { InputTooLongError, MapNotFoundError } from "./errors.js"
-import { LIMITS } from "./limits.js"
+import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js"
 import { bundledSystemCodes } from "./engine.js"
 
 export const API_VERSION = "3.0.0-cloudflare.1"
@@ -16,6 +16,8 @@ export interface AssetsBinding {
 
 export interface Env {
   ASSETS?: AssetsBinding
+  ML_ENDPOINT?: string
+  ML_TOKEN?: string
 }
 
 // The ASSETS binding is constant for an isolate's lifetime; the Hono
@@ -25,6 +27,39 @@ let assets: AssetsBinding | undefined
 
 export function setAssets(binding: AssetsBinding): void {
   assets = binding
+}
+
+let ml: { endpoint: string; token: string } | undefined
+
+export function setMl(endpoint: string | undefined, token: string | undefined): void {
+  ml = endpoint && token ? { endpoint, token } : undefined
+}
+
+// Legacy wire compatibility: the old Ruby API proxied rababa system
+// codes to the ML service; the interscript.org demo still calls this
+// through GraphQL and REST transliterate.
+const RABABA_MODELS: Record<string, string> = {
+  "var-ara-Arab-Arab-rababa": "ara-diac-1.0",
+}
+
+async function infer(model: string, input: string): Promise<string> {
+  if (!ml) {
+    throw new Error("ML inference unavailable — ML_ENDPOINT/ML_TOKEN not set")
+  }
+  const res = await fetch(`${ml.endpoint}/infer`, {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-api-key": ml.token },
+    body: JSON.stringify({ model, input }),
+    signal: AbortSignal.timeout(INFER_TIMEOUT_MS),
+  }).catch(() => null)
+  if (!res || !res.ok) {
+    throw new Error("ML inference upstream failed")
+  }
+  const out = (await res.json().catch(() => null)) as { output?: unknown } | null
+  if (!out || typeof out.output !== "string") {
+    throw new Error("ML inference returned no output")
+  }
+  return out.output
 }
 
 export function requireAssets(): AssetsBinding {
@@ -48,6 +83,10 @@ export function systemCodesResolver(): string[] {
 export async function transliterateResolver(systemCode: string, input: string): Promise<string> {
   if (input.length > LIMITS.input_max_size) {
     throw new InputTooLongError(LIMITS.input_max_size)
+  }
+  const rababaModel = RABABA_MODELS[systemCode]
+  if (rababaModel) {
+    return infer(rababaModel, input)
   }
   try {
     return await transliterate(requireAssets(), systemCode, input)

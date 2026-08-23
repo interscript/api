@@ -48,9 +48,7 @@ export async function loadMap(assets: MapAssets, code: SystemCode): Promise<Comp
   // The Workers ASSETS binding requires an absolute URL (host ignored).
   // The assets directory IS the maps directory — files serve at the
   // root, so no /maps/ prefix.
-  const response = await assets.fetch(
-    new Request(`https://assets.internal/${code}.json`),
-  )
+  const response = await assets.fetch(new Request(`https://assets.internal/${code}.json`))
   if (!response.ok) {
     throw new MapNotFoundError(code)
   }

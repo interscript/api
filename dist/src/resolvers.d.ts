@@ -4,8 +4,11 @@ export interface AssetsBinding {
 }
 export interface Env {
     ASSETS?: AssetsBinding;
+    ML_ENDPOINT?: string;
+    ML_TOKEN?: string;
 }
 export declare function setAssets(binding: AssetsBinding): void;
+export declare function setMl(endpoint: string | undefined, token: string | undefined): void;
 export declare function requireAssets(): AssetsBinding;
 export declare function info(): Promise<string>;
 export declare function systemCodesResolver(): string[];

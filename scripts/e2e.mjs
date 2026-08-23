@@ -57,14 +57,26 @@ console.log(`E2E against ${BASE}\n`)
 {
   const res = await get("/")
   check("GET / 200", res.status === 200)
-  check("GET / lists endpoints", Array.isArray(res.body.endpoints) && res.body.endpoints.includes("POST /v1/infer"))
+  check(
+    "GET / lists endpoints",
+    Array.isArray(res.body.endpoints) && res.body.endpoints.includes("POST /v1/infer"),
+  )
 }
 {
   const res = await get("/openapi.json")
   check("GET /openapi.json 200", res.status === 200)
   check("openapi 3.1", res.body.openapi === "3.1.0")
   const paths = Object.keys(res.body.paths ?? {})
-  for (const p of ["/v1/info", "/v1/maps", "/v1/maps/{code}", "/v1/transliterate", "/v1/detect", "/v1/models", "/v1/models/{id}", "/v1/infer"]) {
+  for (const p of [
+    "/v1/info",
+    "/v1/maps",
+    "/v1/maps/{code}",
+    "/v1/transliterate",
+    "/v1/detect",
+    "/v1/models",
+    "/v1/models/{id}",
+    "/v1/infer",
+  ]) {
     check(`openapi has ${p}`, paths.includes(p))
   }
 }
@@ -92,12 +104,22 @@ console.log(`E2E against ${BASE}\n`)
 
 // --- transliteration (byte-parity with the Ruby API fixture) ---
 {
-  const res = await post("/v1/transliterate", { system: "alalc-kat-Geor-Latn-1997", input: "ქართული" })
+  const res = await post("/v1/transliterate", {
+    system: "alalc-kat-Geor-Latn-1997",
+    input: "ქართული",
+  })
   check("transliterate 200", res.status === 200)
-  check("transliterate Ruby parity", res.body.output === "kʻartʻuli", `got ${JSON.stringify(res.body.output)}`)
+  check(
+    "transliterate Ruby parity",
+    res.body.output === "kʻartʻuli",
+    `got ${JSON.stringify(res.body.output)}`,
+  )
   const missing = await post("/v1/transliterate", { system: "nope-xxx-Xxx-Xxx-0000", input: "x" })
   check("transliterate unknown 404", missing.status === 404)
-  const tooLong = await post("/v1/transliterate", { system: "alalc-kat-Geor-Latn-1997", input: "a".repeat(1_000_001) })
+  const tooLong = await post("/v1/transliterate", {
+    system: "alalc-kat-Geor-Latn-1997",
+    input: "a".repeat(1_000_001),
+  })
   check("transliterate 1MB limit 413", tooLong.status === 413)
   const bad = await post("/v1/transliterate", { system: 42 })
   check("transliterate bad body 400", bad.status === 400)
@@ -107,7 +129,11 @@ console.log(`E2E against ${BASE}\n`)
 {
   const res = await post("/v1/detect", { input: "ქართული", output: "kʻartʻuli" })
   check("detect 200", res.status === 200)
-  check("detect ranks a Georgian system first", (res.body.results ?? [])[0]?.mapName?.includes("kat"), JSON.stringify((res.body.results ?? []).slice(0, 2)))
+  check(
+    "detect ranks a Georgian system first",
+    (res.body.results ?? [])[0]?.mapName?.includes("kat"),
+    JSON.stringify((res.body.results ?? []).slice(0, 2)),
+  )
 }
 
 // --- models ---
@@ -131,12 +157,22 @@ console.log(`E2E against ${BASE}\n`)
 {
   const res = await post("/v1/infer", { model: "heb-diac-small-1.0", input: "שלום עליכם" })
   check("infer hebrew 200", res.status === 200, JSON.stringify(res.body).slice(0, 120))
-  check("infer hebrew adds nikud", typeof res.body.output === "string" && res.body.output.includes("ָ"), `got ${JSON.stringify(res.body.output)}`)
+  check(
+    "infer hebrew adds nikud",
+    typeof res.body.output === "string" && res.body.output.includes("ָ"),
+    `got ${JSON.stringify(res.body.output)}`,
+  )
 }
 {
   const res = await post("/v1/infer", { model: "urd-g2p-1.0", input: "اردو" })
   check("infer urdu 200", res.status === 200)
-  check("infer urdu IPA output", typeof res.body.output === "string" && res.body.output.length > 0 && /[ɑɐəɪʊuː]/.test(res.body.output), `got ${JSON.stringify(res.body.output)}`)
+  check(
+    "infer urdu IPA output",
+    typeof res.body.output === "string" &&
+      res.body.output.length > 0 &&
+      /[ɑɐəɪʊuː]/.test(res.body.output),
+    `got ${JSON.stringify(res.body.output)}`,
+  )
 }
 {
   const missing = await post("/v1/infer", { model: "nope-9.9", input: "x" })
@@ -158,9 +194,43 @@ console.log(`E2E against ${BASE}\n`)
   const info = await q("{ info }")
   check("graphql info", JSON.parse(info.data.info).version.startsWith("3."))
   const codes = await q("{ systemCodes }")
-  check("graphql systemCodes 287", codes.data.systemCodes.length === 287, `got ${codes.data.systemCodes.length}`)
+  check(
+    "graphql systemCodes 287",
+    codes.data.systemCodes.length === 287,
+    `got ${codes.data.systemCodes.length}`,
+  )
   const tr = await q('{ transliterate(systemCode: "alalc-kat-Geor-Latn-1997", input: "ქართული") }')
   check("graphql transliterate parity", tr.data.transliterate === "kʻartʻuli")
+}
+
+// --- legacy wire format (the interscript.org demo client) ---
+{
+  const res = await fetch(`${BASE}/prod`, {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: `{ transliterate(systemCode: "alalc-kat-Geor-Latn-1997", input: "ქართული") }`,
+  })
+  check("legacy raw-body graphql 200", res.status === 200, `status ${res.status}`)
+  const body = await res.json()
+  check(
+    "legacy raw-body transliterate",
+    body.data?.transliterate === "kʻartʻuli",
+    JSON.stringify(body).slice(0, 120),
+  )
+}
+{
+  // The demo's Diacritize button: rababa system code routes to ML inference.
+  const res = await fetch(`${BASE}/prod`, {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: `{ transliterate(systemCode: "var-ara-Arab-Arab-rababa", input: "مدرسة جميلة") }`,
+  })
+  const body = await res.json()
+  check(
+    "rababa route diacritizes",
+    /[ً-ْ]/.test(String(body.data?.transliterate ?? "")),
+    JSON.stringify(body).slice(0, 120),
+  )
 }
 
 // --- CORS ---
