@@ -44,9 +44,7 @@ export const OPENAPI = {
             get: {
                 tags: ["maps"],
                 summary: "One system's compiled map (JSON IR)",
-                parameters: [
-                    { name: "code", in: "path", required: true, schema: { type: "string" } },
-                ],
+                parameters: [{ name: "code", in: "path", required: true, schema: { type: "string" } }],
                 responses: {
                     "200": { $ref: "#/components/responses/Ok" },
                     "404": { $ref: "#/components/responses/NotFound" },

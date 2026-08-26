@@ -9,16 +9,16 @@
     ".": {
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
-    },
-    "./maps": {
-      "types": "./maps/manifest.d.ts",
-      "default": "./maps/manifest.js"
     }
   },
   "files": [
-    "dist",
-    "maps",
-    "schema"
+    "dist/src/index.js",
+    "dist/src/index.d.ts",
+    "dist/src/server.d.ts",
+    "dist/src/schema.d.ts",
+    "dist/src/resolvers.d.ts",
+    "dist/src/limits.d.ts",
+    "dist/src/generated/models.json"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && esbuild src/index.ts --bundle --platform=neutral --format=esm --minify --outfile=dist/src/index.js --external:node:* --external:hono --external:graphql-yoga --external:@whatwg-node/fetch",
