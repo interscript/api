@@ -1,6 +1,6 @@
 {
   "name": "@interscript/api-worker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Interscript API software — GraphQL API for transliteration on Cloudflare Workers (or any Workers-compatible runtime). Deploy your own endpoint: see README.",
   "type": "module",
   "main": "./dist/src/index.js",

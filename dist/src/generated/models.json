@@ -143,12 +143,12 @@
             "metrics": [
                 {
                     "name": "per_teacher",
-                    "value": 4.43,
+                    "value": 1.25,
                     "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-base-1.0"
                 },
                 {
                     "name": "per_student",
-                    "value": 9.19,
+                    "value": 3.53,
                     "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-base-1.0"
                 }
             ],
@@ -175,8 +175,13 @@
                     "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-small-1.0"
                 },
                 {
-                    "name": "per_student",
+                    "name": "per_student_beam4",
                     "value": 12.06,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-small-1.0"
+                },
+                {
+                    "name": "per_student",
+                    "value": 2.85,
                     "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-small-1.0"
                 }
             ],
@@ -203,8 +208,13 @@
                     "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-small-1.0"
                 },
                 {
-                    "name": "per_student",
+                    "name": "per_student_beam4",
                     "value": 12.06,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-small-1.0"
+                },
+                {
+                    "name": "per_student",
+                    "value": 2.85,
                     "source": "interscript/interscript-ml docs/RESULTS.md#tha-g2p-small-1.0"
                 }
             ],
@@ -282,6 +292,44 @@
             "license": "BSD-3-Clause"
         },
         {
+            "id": "ara-diac-small-1.0",
+            "task": "diacritization",
+            "scripts": ["Arab", "Arab"],
+            "precision": "fp32",
+            "filename": "ara-diac-small-1.0-fp32.zip",
+            "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-small-1.0/ara-diac-small-1.0-fp32.zip",
+            "parts": null,
+            "sha256": "8b149beb04294a2e482af876a34ae0fca3e87412606116fae1a376845fd4111a",
+            "size": 1418126835,
+            "metrics": [
+                {
+                    "name": "der_teacher_greedy",
+                    "value": 1.3205,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                },
+                {
+                    "name": "der_student_greedy",
+                    "value": 3.658,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                },
+                {
+                    "name": "der_teacher_fullset",
+                    "value": 2.5815,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                },
+                {
+                    "name": "der_student_fullset",
+                    "value": 8.259,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                }
+            ],
+            "parity": {
+                "samples": 800,
+                "cer_delta": 0
+            },
+            "license": "BSD-3-Clause"
+        },
+        {
             "id": "heb-diac-1.1",
             "task": "diacritization",
             "scripts": ["Hebr", "Hebr"],
@@ -316,6 +364,83 @@
             ],
             "parity": {
                 "samples": 500,
+                "cer_delta": 0
+            },
+            "license": "BSD-3-Clause"
+        },
+        {
+            "id": "ara-diac-1.0",
+            "task": "diacritization",
+            "scripts": ["Arab", "Arab"],
+            "precision": "fp32",
+            "filename": "ara-diac-1.0-fp32.zip",
+            "url": null,
+            "parts": [
+                {
+                    "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-1.0/ara-diac-1.0-fp32.zip.part-00",
+                    "sha256": "6282a9291fb45ac7fcc3abe79d33b5913e91f87dcff8b305bf1d57ed98a3ed0b",
+                    "size": 1500000000
+                },
+                {
+                    "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-1.0/ara-diac-1.0-fp32.zip.part-01",
+                    "sha256": "7e7254a89ec75493871f6f61a993315097dad1bb0ba63c4584453c309e8cb906",
+                    "size": 1280311342
+                }
+            ],
+            "sha256": "9e6d9777fe2474b150450774aaa1c9e8a9051b502b184fde298b91636dcfdac6",
+            "size": 2780311342,
+            "metrics": [
+                {
+                    "name": "der_total_greedy",
+                    "value": 2.5793,
+                    "source": "rababa/docs/RESULTS.md#r6-verdict-table-sadeeddiac-25-2026-08-21"
+                },
+                {
+                    "name": "der_morph_greedy",
+                    "value": 1.5317,
+                    "source": "rababa/docs/RESULTS.md#r6-verdict-table-sadeeddiac-25-2026-08-21"
+                }
+            ],
+            "parity": {
+                "samples": 500,
+                "cer_delta": 0
+            },
+            "license": "BSD-3-Clause"
+        },
+        {
+            "id": "ara-diac-small-1.0-int8",
+            "task": "diacritization",
+            "scripts": ["Arab", "Arab"],
+            "precision": "int8",
+            "filename": "ara-diac-small-1.0-int8.zip",
+            "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-small-1.0/ara-diac-small-1.0-int8.zip",
+            "parts": null,
+            "sha256": "af247d837bee7e755b5287102cfb715c48dc90c2cf41ec1c41e7238e1a72b678",
+            "size": 256959713,
+            "metrics": [
+                {
+                    "name": "der_teacher_greedy",
+                    "value": 1.3205,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                },
+                {
+                    "name": "der_student_greedy",
+                    "value": 3.658,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                },
+                {
+                    "name": "der_teacher_fullset",
+                    "value": 2.5815,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                },
+                {
+                    "name": "der_student_fullset",
+                    "value": 8.259,
+                    "source": "interscript/interscript-ml docs/RESULTS.md#ara-diac-small-1.0"
+                }
+            ],
+            "parity": {
+                "samples": 800,
                 "cer_delta": 0
             },
             "license": "BSD-3-Clause"
