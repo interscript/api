@@ -19,6 +19,7 @@ describe("npm package contents", () => {
 
     expect(paths.some((path) => path.startsWith("maps/") && path.endsWith(".json"))).toBe(false)
     expect(paths.some((path) => path.startsWith("dist/test/"))).toBe(false)
+    expect(paths.some((path) => path === "dist/src/maps.js")).toBe(false)
     expect(packument.unpackedSize).toBeLessThan(1_000_000)
   })
 })
