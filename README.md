@@ -13,12 +13,12 @@ Any organization can deploy this package privately on their own domain.
 
 Field-for-field identical to the long-running Ruby API:
 
-| field | behavior |
-|---|---|
-| `info` | version JSON |
-| `systemCodes` | all 287 transliteration systems |
-| `transliterate(systemCode!, input!)` | transliterate (1MB input cap) |
-| `detect(input!, output!)` | ranked `[{mapName, distance}]` |
+| field                                | behavior                        |
+| ------------------------------------ | ------------------------------- |
+| `info`                               | version JSON                    |
+| `systemCodes`                        | all 287 transliteration systems |
+| `transliterate(systemCode!, input!)` | transliterate (1MB input cap)   |
+| `detect(input!, output!)`            | ranked `[{mapName, distance}]`  |
 
 Error strings match byte-for-byte (`Couldn't locate <code>`).
 
@@ -28,16 +28,19 @@ Error strings match byte-for-byte (`Couldn't locate <code>`).
   [`interscript-ts`](https://github.com/interscript/interscript-ts) —
   no regex compilation.
 - **Maps**: the full corpus (287 systems + 4 dependency libraries,
-  compiled to schema-versioned JSON IR from interscript-maps 2.4.3) is
-  **bundled with the deploy as static assets** — minified ~260MB,
-  ~21MB gzipped, every file well under the 20MiB asset limit. Immutable
-  per release, edge-cached, zero runtime third-party fetches.
+  compiled to schema-versioned JSON IR from interscript-maps) is a
+  deploy-time asset, not part of this npm package. Deployment repos fetch
+  a pinned map artifact from `interscript/maps`, verify it, and expose it
+  through the Workers Assets binding. Immutable per release, edge-cached,
+  zero runtime third-party fetches.
 - **Server**: Hono + GraphQL Yoga.
 
 ## Deploy your own
 
 ```bash
 npm install @interscript/api-worker
+# Then fetch/extract a pinned interscript/maps JSON-IR artifact into ./maps.
+# Do not copy maps from this npm package; the package is code-only.
 ```
 
 Minimal `wrangler.jsonc`:
@@ -48,10 +51,10 @@ Minimal `wrangler.jsonc`:
   "main": "src/index.ts",
   "compatibility_date": "2026-08-01",
   "assets": {
-    "directory": "./node_modules/@interscript/api-worker/maps",
-    "binding": "ASSETS"
+    "directory": "./maps",
+    "binding": "ASSETS",
   },
-  "routes": [{ "pattern": "api.example.org/*" }]
+  "routes": [{ "pattern": "api.example.org/*" }],
 }
 ```
 
@@ -72,15 +75,18 @@ npm run lint
 Regenerating the map corpus (requires interscript-ruby + interscript-maps):
 
 ```bash
-ruby -e '... see scripts/build-maps.rb ...'
+ruby scripts/build-maps.rb /path/to/interscript-ruby /path/to/maps ./maps
 ```
+
+For production deploys, prefer a pinned release artifact from
+`interscript/maps` over local regeneration; verify the artifact checksum
+before `wrangler deploy`.
 
 ## Parity
 
 `test/fixtures/parity.json` holds queries recorded from the production
 Ruby API; CI replays them against this implementation. Zero-diff is the
 release gate.
-
 
 ## REST v1 (OpenAPI)
 

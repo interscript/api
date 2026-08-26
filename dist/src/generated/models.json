@@ -4,10 +4,7 @@
         {
             "id": "khm-latn-1.0",
             "task": "translit",
-            "scripts": [
-                "Khmr",
-                "Latn"
-            ],
+            "scripts": ["Khmr", "Latn"],
             "precision": "fp32",
             "filename": "khm-latn-1.0-fp32.zip",
             "url": "https://github.com/interscript/interscript-ml/releases/download/khm-latn-1.0/khm-latn-1.0-fp32.zip",
@@ -35,10 +32,7 @@
         {
             "id": "urd-g2p-1.0",
             "task": "g2p",
-            "scripts": [
-                "Arab",
-                "IPA"
-            ],
+            "scripts": ["Arab", "IPA"],
             "precision": "fp32",
             "filename": "urd-g2p-1.0-fp32.zip",
             "url": "https://github.com/interscript/interscript-ml/releases/download/urd-g2p-1.0/urd-g2p-1.0-fp32.zip",
@@ -66,10 +60,7 @@
         {
             "id": "urd-diac-1.0",
             "task": "diacritization",
-            "scripts": [
-                "Arab",
-                "Arab"
-            ],
+            "scripts": ["Arab", "Arab"],
             "precision": "fp32",
             "filename": "urd-diac-1.0-fp32.zip",
             "url": "https://github.com/interscript/interscript-ml/releases/download/urd-diac-1.0/urd-diac-1.0-fp32.zip",
@@ -92,10 +83,7 @@
         {
             "id": "heb-diac-1.0",
             "task": "diacritization",
-            "scripts": [
-                "Hebr",
-                "Hebr"
-            ],
+            "scripts": ["Hebr", "Hebr"],
             "precision": "fp32",
             "filename": "heb-diac-1.0-fp32.zip",
             "url": null,
@@ -134,10 +122,7 @@
         {
             "id": "tha-g2p-base-1.0",
             "task": "g2p",
-            "scripts": [
-                "Thai",
-                "IPA"
-            ],
+            "scripts": ["Thai", "IPA"],
             "precision": "fp32",
             "filename": "tha-g2p-base-1.0-fp32.zip",
             "url": null,
@@ -176,10 +161,7 @@
         {
             "id": "tha-g2p-small-1.0",
             "task": "g2p",
-            "scripts": [
-                "Thai",
-                "IPA"
-            ],
+            "scripts": ["Thai", "IPA"],
             "precision": "int8",
             "filename": "tha-g2p-small-1.0-int8.zip",
             "url": "https://github.com/interscript/interscript-ml/releases/download/tha-g2p-small-1.0/tha-g2p-small-1.0-int8.zip",
@@ -207,10 +189,7 @@
         {
             "id": "tha-g2p-small-1.0-int4",
             "task": "g2p",
-            "scripts": [
-                "Thai",
-                "IPA"
-            ],
+            "scripts": ["Thai", "IPA"],
             "precision": "int4",
             "filename": "tha-g2p-small-1.0-int4.zip",
             "url": "https://github.com/interscript/interscript-ml/releases/download/tha-g2p-small-1.0/tha-g2p-small-1.0-int4.zip",
@@ -238,10 +217,7 @@
         {
             "id": "heb-diac-small-1.0",
             "task": "diacritization",
-            "scripts": [
-                "Hebr",
-                "Hebr"
-            ],
+            "scripts": ["Hebr", "Hebr"],
             "precision": "fp32",
             "filename": "heb-diac-small-1.0-fp32.zip",
             "url": "https://github.com/interscript/interscript-ml/releases/download/heb-diac-small-1.0/heb-diac-small-1.0-fp32.zip",
@@ -269,10 +245,7 @@
         {
             "id": "fas-g2p-1.0",
             "task": "g2p",
-            "scripts": [
-                "Arab",
-                "Latn"
-            ],
+            "scripts": ["Arab", "Latn"],
             "precision": "fp32",
             "filename": "fas-g2p-1.0-fp32.zip",
             "url": null,
@@ -311,10 +284,7 @@
         {
             "id": "heb-diac-1.1",
             "task": "diacritization",
-            "scripts": [
-                "Hebr",
-                "Hebr"
-            ],
+            "scripts": ["Hebr", "Hebr"],
             "precision": "fp32",
             "filename": "heb.zip",
             "url": null,
