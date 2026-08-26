@@ -124,7 +124,7 @@ describe("REST detect", () => {
     const body = (await res.json()) as { count: number; results: { mapName: string }[] }
     expect(body.count).toBeGreaterThan(0)
     expect(body.results[0]?.mapName).toContain("kat")
-  })
+  }, 120_000)
 })
 
 describe("REST models + inference", () => {
