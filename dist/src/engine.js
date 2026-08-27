@@ -2,7 +2,7 @@
  * Engine wiring: the native async interpreter from interscript-ts over
  * the assets-backed map loader. No regex compilation, ever.
  */
-import { configure, transliterateAsync } from "interscript-ts";
+import { configure, transliterateAsync } from "interscript";
 import { bundledSystemCodes, detectableSystemCodes, loadMap } from "./maps.js";
 let configuredFor;
 function ensureEngine(assets) {

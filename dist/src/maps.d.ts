@@ -8,7 +8,7 @@
  * Assets binding). Tests inject an equivalent object backed by the
  * local filesystem.
  */
-import { type CompiledMap, type SystemCode } from "interscript-ts";
+import { type CompiledMap, type SystemCode } from "interscript";
 export interface MapAssets {
     fetch(input: RequestInfo): Promise<Response>;
 }

@@ -2,7 +2,7 @@
  * Resolvers — behavior-matched to the Ruby API. The map assets binding
  * arrives via the Yoga context (yoga.fetch(request, env, ctx)).
  */
-import { MapNotFoundError as EngineMapNotFoundError } from "interscript-ts";
+import { MapNotFoundError as EngineMapNotFoundError } from "interscript";
 import { detect, transliterate } from "./engine.js";
 import { InputTooLongError, MapNotFoundError } from "./errors.js";
 import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js";
