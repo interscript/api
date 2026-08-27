@@ -8,7 +8,7 @@
  * Assets binding). Tests inject an equivalent object backed by the
  * local filesystem.
  */
-import { MapNotFoundError, normaliseMap, } from "interscript-ts";
+import { MapNotFoundError, normaliseMap, } from "interscript";
 import { systemCodes } from "../maps/manifest.js";
 // These four are dependency libraries, not user-addressable systems —
 // the Ruby API lists maps only (var-* FAMILY maps are real systems).

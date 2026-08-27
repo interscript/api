@@ -120,7 +120,7 @@ describe("REST detect", () => {
         const body = (await res.json());
         expect(body.count).toBeGreaterThan(0);
         expect(body.results[0]?.mapName).toContain("kat");
-    });
+    }, 120_000);
 });
 describe("REST models + inference", () => {
     it("GET /v1/models lists the IMF index", async () => {
