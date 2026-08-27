@@ -14,7 +14,7 @@ import {
   type CompiledMap,
   type CompiledMapJson,
   type SystemCode,
-} from "interscript-ts"
+} from "interscript"
 import { systemCodes } from "../maps/manifest.js"
 
 // These four are dependency libraries, not user-addressable systems —

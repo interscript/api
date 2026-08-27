@@ -1,1 +1,0 @@
-{"version":3,"file":"onnx-node.d.ts","sourceRoot":"","sources":["../../../src/ml/session/onnx-node.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAEH,OAAO,KAAK,EACV,gBAAgB,EAKjB,MAAM,aAAa,CAAA;AA6EpB,wBAAsB,iBAAiB,CAAC,SAAS,EAAE,WAAW,GAAG,UAAU,GAAG,OAAO,CAAC,gBAAgB,CAAC,CAEtG"}
