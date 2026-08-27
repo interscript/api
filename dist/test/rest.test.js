@@ -34,6 +34,24 @@ describe("REST index + docs", () => {
         const body = (await res.json());
         expect(body.endpoints).toContain("POST /v1/infer");
     });
+    it("GET / serves the docs page to browsers, JSON to API clients", async () => {
+        const html = await get("/", { accept: "text/html,application/xhtml+xml" });
+        expect(html.status).toBe(200);
+        expect(html.headers.get("content-type")).toContain("text/html");
+        const page = await html.text();
+        expect(page).toContain("<!doctype html>");
+        expect(page).toMatch(/POST<\/span><\/td><td><code>\/v1\/transliterate/);
+        const json = await get("/");
+        expect(json.headers.get("content-type")).toContain("application/json");
+    });
+    it("GET /docs always serves the docs page", async () => {
+        const res = await get("/docs");
+        expect(res.status).toBe(200);
+        expect(res.headers.get("content-type")).toContain("text/html");
+        const page = await res.text();
+        expect(page).toContain("openapi.json");
+        expect(page).toContain("/graphql");
+    });
     it("GET /openapi.json serves a 3.1 document covering all routes", async () => {
         const res = await get("/openapi.json");
         expect(res.status).toBe(200);

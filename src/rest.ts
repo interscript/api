@@ -28,6 +28,7 @@ import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js"
 import { bundledSystemCodes } from "./engine.js"
 import { getModel, listModels, MODELS_INDEX_VERSION } from "./models.js"
 import { OPENAPI } from "./openapi.js"
+import { docsPage } from "./docs.js"
 
 function errorResponse(status: number, code: string, message: string) {
   return Response.json({ error: { code, message } }, { status })
@@ -35,23 +36,30 @@ function errorResponse(status: number, code: string, message: string) {
 
 export const rest = new Hono<{ Bindings: Env }>()
 
+const wantsHtml = (accept: string | undefined): boolean =>
+  (accept ?? "").toLowerCase().includes("text/html")
+
+rest.get("/docs", (c) => c.html(docsPage("/openapi.json")))
+
 rest.get("/", (c) =>
-  c.json({
-    name: "Interscript API",
-    version: "v1",
-    openapi: "/openapi.json",
-    endpoints: [
-      "GET /v1/info",
-      "GET /v1/maps",
-      "GET /v1/maps/{code}",
-      "POST /v1/transliterate",
-      "POST /v1/detect",
-      "GET /v1/models",
-      "GET /v1/models/{id}",
-      "POST /v1/infer",
-      "POST /graphql",
-    ],
-  }),
+  wantsHtml(c.req.header("accept"))
+    ? c.html(docsPage("/openapi.json"))
+    : c.json({
+        name: "Interscript API",
+        version: "v1",
+        openapi: "/openapi.json",
+        endpoints: [
+          "GET /v1/info",
+          "GET /v1/maps",
+          "GET /v1/maps/{code}",
+          "POST /v1/transliterate",
+          "POST /v1/detect",
+          "GET /v1/models",
+          "GET /v1/models/{id}",
+          "POST /v1/infer",
+          "POST /graphql",
+        ],
+      }),
 )
 
 rest.get("/openapi.json", (c) => c.json(OPENAPI))
