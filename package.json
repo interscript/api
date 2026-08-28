@@ -35,7 +35,7 @@
   "dependencies": {
     "graphql-yoga": "^5.0.0",
     "hono": "^4.0.0",
-    "interscript": "^3.0.0"
+    "interscript": "^4.0.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260811.1",
