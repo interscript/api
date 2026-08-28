@@ -163,6 +163,40 @@ describe("REST models + inference", () => {
     expect(missing.status).toBe(404)
   })
 
+  it("POST /v1/infer passes upstream 4xx status through (not 502)", async () => {
+    const stubEnv = {
+      ASSETS: assets,
+      ML_ENDPOINT: "https://ml-stub.example",
+      ML_TOKEN: "t",
+    }
+    const originalFetch = globalThis.fetch
+    globalThis.fetch = (async (url: string | URL | Request) => {
+      if (String(url).includes("ml-stub.example")) {
+        return new Response(
+          JSON.stringify({ detail: "model x task translit is not served" }),
+          { status: 400, headers: { "content-type": "application/json" } },
+        )
+      }
+      return originalFetch(url as RequestInfo)
+    }) as typeof fetch
+    try {
+      const res = await app.request(
+        "https://example.org/v1/infer",
+        {
+          method: "POST",
+          headers: JSON_HEADERS,
+          body: JSON.stringify({ model: "khm-latn-1.0", input: "x" }),
+        },
+        stubEnv,
+      )
+      expect(res.status).toBe(400)
+      const body = (await res.json()) as { error: { code: string } }
+      expect(body.error.code).not.toBe("inference_upstream")
+    } finally {
+      globalThis.fetch = originalFetch
+    }
+  })
+
   it("POST /v1/infer validates without an upstream configured", async () => {
     const unconfigured = await post("/v1/infer", { model: "heb-diac-1.0", input: "x" })
     expect(unconfigured.status).toBe(503)

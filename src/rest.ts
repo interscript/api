@@ -170,6 +170,11 @@ rest.post("/v1/infer", async (c) => {
   }).catch(() => null)
   if (!upstream || !upstream.ok) {
     const detail = upstream ? await upstream.text().catch(() => "") : "upstream unreachable"
+    if (upstream && upstream.status >= 400 && upstream.status < 500) {
+      // upstream rejected the request itself (unknown model, task not
+      // served, oversized input) — pass the status + detail through
+      return errorResponse(upstream.status, "inference_rejected", detail.slice(0, 500))
+    }
     return errorResponse(502, "inference_upstream", detail.slice(0, 500))
   }
   const result = (await upstream.json()) as Record<string, unknown>
