@@ -172,10 +172,10 @@ describe("REST models + inference", () => {
     const originalFetch = globalThis.fetch
     globalThis.fetch = (async (url: string | URL | Request) => {
       if (String(url).includes("ml-stub.example")) {
-        return new Response(
-          JSON.stringify({ detail: "model x task translit is not served" }),
-          { status: 400, headers: { "content-type": "application/json" } },
-        )
+        return new Response(JSON.stringify({ detail: "model x task translit is not served" }), {
+          status: 400,
+          headers: { "content-type": "application/json" },
+        })
       }
       return originalFetch(url as RequestInfo)
     }) as typeof fetch
