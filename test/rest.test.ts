@@ -222,3 +222,31 @@ describe("POST /v1/infer/batch", () => {
     expect(many.status).toBe(400)
   })
 })
+
+describe("GET /v1/assets/* (CORS release proxy)", () => {
+  it("streams release assets with permissive CORS and passthrough status", async () => {
+    const originalFetch = globalThis.fetch
+    globalThis.fetch = (async (url: string | URL | Request) => {
+      if (String(url).includes("releases/download")) {
+        return new Response("asset-bytes", {
+          status: 200,
+          headers: { "content-type": "application/octet-stream" },
+        })
+      }
+      return originalFetch(url as RequestInfo)
+    }) as typeof fetch
+    try {
+      const res = await get("/v1/assets/index-v2/models-index.yaml")
+      expect(res.status).toBe(200)
+      expect(res.headers.get("access-control-allow-origin")).toBe("*")
+      expect(await res.text()).toBe("asset-bytes")
+    } finally {
+      globalThis.fetch = originalFetch
+    }
+  })
+
+  it("rejects encoded traversal within the assets path", async () => {
+    const res = await get("/v1/assets/index-v2/..%2fsecret.yaml")
+    expect([400, 404]).toContain(res.status)
+  })
+})
