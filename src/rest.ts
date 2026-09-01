@@ -137,6 +137,31 @@ rest.post("/v1/detect", async (c) => {
   return c.json({ count: results.length, results })
 })
 
+const RELEASE_BASE = "https://github.com/interscript/interscript-ml/releases/download"
+
+/**
+ * CORS-enabled streaming proxy for release assets (TODO.client-work 13):
+ * browsers cannot fetch GH Releases directly — the github.com redirect
+ * hop carries no Access-Control-Allow-Origin. Releases stay the origin
+ * of truth; this is the edge front door on the API's own domain.
+ */
+rest.get("/v1/assets/*", async (c) => {
+  const path = c.req.path.replace(/^\/v1\/assets\//, "")
+  if (!/^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._.-]*$/.test(path)) {
+    return errorResponse(400, "bad_request", "path must be {tag}/{file}")
+  }
+  const upstream = await fetch(`${RELEASE_BASE}/${path}`).catch(() => null)
+  if (!upstream || !upstream.ok) {
+    return errorResponse(404, "asset_not_found", `Couldn't locate ${path}`)
+  }
+  const headers = new Headers()
+  headers.set("access-control-allow-origin", "*")
+  headers.set("content-type", upstream.headers.get("content-type") ?? "application/octet-stream")
+  const length = upstream.headers.get("content-length")
+  if (length) headers.set("content-length", length)
+  return new Response(upstream.body, { status: upstream.status, headers })
+})
+
 rest.get("/v1/models", (c) => c.json({ count: listModels().length, models: listModels() }))
 
 rest.get("/v1/models/:id", (c) => {
