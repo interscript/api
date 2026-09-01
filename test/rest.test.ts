@@ -208,3 +208,17 @@ describe("REST models + inference", () => {
     expect(badBody.status).toBe(400)
   })
 })
+
+describe("POST /v1/infer/batch", () => {
+  it("validates without an upstream and rejects unknown models", async () => {
+    const bad = await post("/v1/infer/batch", { model: "nope-9.9", inputs: ["x"] })
+    expect(bad.status).toBe(404)
+    const shape = await post("/v1/infer/batch", { model: "heb-diac-1.0", inputs: [] })
+    expect(shape.status).toBe(400)
+    const many = await post("/v1/infer/batch", {
+      model: "heb-diac-1.0",
+      inputs: Array(51).fill("x"),
+    })
+    expect(many.status).toBe(400)
+  })
+})

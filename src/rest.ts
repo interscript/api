@@ -145,6 +145,52 @@ rest.get("/v1/models/:id", (c) => {
   return c.json(model)
 })
 
+rest.post("/v1/infer/batch", async (c) => {
+  // TODO.client-work 10: N inputs per request against one model;
+  // per-item isolation — one bad input cannot fail the batch.
+  const body = await c.req.json<unknown>().catch(() => null)
+  const { model, inputs } = (body ?? {}) as { model?: unknown; inputs?: unknown }
+  if (typeof model !== "string" || !Array.isArray(inputs) || inputs.length === 0) {
+    return errorResponse(400, "bad_request", "body must be JSON {model, inputs: string[]}")
+  }
+  if (inputs.length > 50) {
+    return errorResponse(400, "bad_request", "batch limited to 50 inputs")
+  }
+  if (inputs.some((i) => typeof i !== "string")) {
+    return errorResponse(400, "bad_request", "inputs must all be strings")
+  }
+  if (!getModel(model)) {
+    return errorResponse(404, "model_not_found", `Couldn't locate ${model}`)
+  }
+  const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {}) as Record<string, string | undefined>
+  if (!ML_ENDPOINT || !ML_TOKEN) {
+    return errorResponse(503, "inference_unconfigured", "ML_ENDPOINT/ML_TOKEN are not set")
+  }
+  const results = await Promise.all(
+    (inputs as string[]).map(async (input) => {
+      try {
+        const upstream = await fetch(`${ML_ENDPOINT}/infer`, {
+          method: "POST",
+          headers: { "content-type": "application/json", "x-api-key": ML_TOKEN },
+          body: JSON.stringify({ model, input }),
+          signal: AbortSignal.timeout(INFER_TIMEOUT_MS),
+        }).catch(() => null)
+        if (!upstream || !upstream.ok) {
+          return { input, output: null, error: "inference_upstream" }
+        }
+        const r = (await upstream.json().catch(() => null)) as { output?: unknown } | null
+        if (!r || typeof r.output !== "string") {
+          return { input, output: null, error: "inference_upstream" }
+        }
+        return { input, output: r.output, error: null }
+      } catch {
+        return { input, output: null, error: "inference_upstream" }
+      }
+    }),
+  )
+  return c.json({ model, count: results.length, results })
+})
+
 rest.post("/v1/infer", async (c) => {
   const body = await c.req.json<unknown>().catch(() => null)
   const { model, input } = (body ?? {}) as { model?: unknown; input?: unknown }
