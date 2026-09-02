@@ -267,6 +267,10 @@ export const OPENAPI = {
         description: "Success",
         content: { "application/json": { schema: { type: "object" } } },
       },
+      BadRequest: {
+        description: "Malformed request",
+        content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
+      },
       NotFound: {
         description: "Unknown system or model",
         content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
