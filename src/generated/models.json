@@ -638,6 +638,161 @@
     "cer_delta": 0.0947
    },
    "license": "BSD-3-Clause"
+  },
+  {
+   "id": "ara-diac-small-2.1",
+   "task": "diacritization",
+   "scripts": [
+    "Arab",
+    "Arab"
+   ],
+   "precision": "fp32",
+   "filename": "ara-diac-small-2.1-fp32.zip",
+   "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-small-2.1/ara-diac-small-2.1-fp32.zip",
+   "parts": null,
+   "sha256": "a69918de9f87664fd97cdab3bf68b655966f608211dbeadd7b6fb3f7b03e5ffb",
+   "size": 1419756840,
+   "metrics": [
+    {
+     "name": "der_teacher_fullset",
+     "value": 2.289,
+     "source": "interscript/interscript-ml docs/RESULTS.md#run-006-r7-muon"
+    },
+    {
+     "name": "der_student_fullset",
+     "value": 4.5701,
+     "source": "interscript/interscript-ml docs/RESULTS.md#run-006-r7-muon"
+    }
+   ],
+   "parity": {
+    "samples": 2480,
+    "cer_delta": 0.0714
+   },
+   "license": null
+  },
+  {
+   "id": "ara-diac-small-2.1-int8",
+   "task": "diacritization",
+   "scripts": [
+    "Arab",
+    "Arab"
+   ],
+   "precision": "int8",
+   "filename": "ara-diac-small-2.1-int8.zip",
+   "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-small-2.1/ara-diac-small-2.1-int8.zip",
+   "parts": null,
+   "sha256": "9b4e4aad2ab53a8cfbec432a78e27b409376627243aec3fd043f06574552a32b",
+   "size": 267965657,
+   "metrics": [
+    {
+     "name": "der_teacher_fullset",
+     "value": 2.289,
+     "source": "interscript/interscript-ml docs/RESULTS.md#run-006-r7-muon"
+    },
+    {
+     "name": "der_student_fullset",
+     "value": 4.5701,
+     "source": "interscript/interscript-ml docs/RESULTS.md#run-006-r7-muon"
+    }
+   ],
+   "parity": {
+    "samples": 2480,
+    "cer_delta": 0.0857
+   },
+   "license": "BSD-3-Clause"
+  },
+  {
+   "id": "ara-diac-layerdrop-1.0",
+   "task": "diacritization",
+   "scripts": [
+    "Arab",
+    "Arab"
+   ],
+   "precision": "fp32",
+   "filename": "ara-diac-layerdrop-1.0-fp32.zip",
+   "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-layerdrop-1.0/ara-diac-layerdrop-1.0-fp32.zip",
+   "parts": null,
+   "sha256": "8f297bdc0e7eba5160c6ed8a2a437abbd399687fd14f2f2b640a4b4c639a3d16",
+   "size": 1015218371,
+   "metrics": [
+    {
+     "name": "der_teacher_fullset",
+     "value": 2.2921,
+     "source": "interscript/interscript-ml docs/RESULTS.md#layerdrop-6ep"
+    },
+    {
+     "name": "der_student_fullset",
+     "value": 5.784,
+     "source": "interscript/interscript-ml docs/RESULTS.md#layerdrop-6ep"
+    }
+   ],
+   "parity": {
+    "samples": 2480,
+    "cer_delta": 0.0632
+   },
+   "license": "BSD-3-Clause"
+  },
+  {
+   "id": "ara-diac-layerdrop-1.0-int8",
+   "task": "diacritization",
+   "scripts": [
+    "Arab",
+    "Arab"
+   ],
+   "precision": "int8",
+   "filename": "ara-diac-layerdrop-1.0-int8.zip",
+   "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-layerdrop-1.0/ara-diac-layerdrop-1.0-int8.zip",
+   "parts": null,
+   "sha256": "68dcc06cd8861e017c4d4912ce3e1fe057d78b79b0a7b6246ae8603c99930963",
+   "size": 191603048,
+   "metrics": [
+    {
+     "name": "der_teacher_fullset",
+     "value": 2.2921,
+     "source": "interscript/interscript-ml docs/RESULTS.md#layerdrop-6ep"
+    },
+    {
+     "name": "der_student_fullset",
+     "value": 5.784,
+     "source": "interscript/interscript-ml docs/RESULTS.md#layerdrop-6ep"
+    }
+   ],
+   "parity": {
+    "samples": 2480,
+    "cer_delta": 0.0538
+   },
+   "license": "BSD-3-Clause"
+  },
+  {
+   "id": "ara-diac-layerdrop-1.0-int4",
+   "task": "diacritization",
+   "scripts": [
+    "Arab",
+    "Arab"
+   ],
+   "precision": "int4",
+   "filename": "ara-diac-layerdrop-1.0-int4.zip",
+   "url": "https://github.com/interscript/interscript-ml/releases/download/ara-diac-layerdrop-1.0/ara-diac-layerdrop-1.0-int4.zip",
+   "parts": null,
+   "sha256": "352e02105645a6e283e2c3602505bea0e90085b741666fd863e478e4835e7bc9",
+   "size": 145195702,
+   "metrics": [
+    {
+     "name": "der_teacher_fullset",
+     "value": 2.2921,
+     "source": "interscript/interscript-ml docs/RESULTS.md#layerdrop-6ep"
+    },
+    {
+     "name": "der_student_fullset",
+     "value": 5.784,
+     "source": "interscript/interscript-ml docs/RESULTS.md#layerdrop-6ep"
+    }
+   ],
+   "parity": {
+    "samples": 2480,
+    "cer_delta": 0.0589
+   },
+   "license": "BSD-3-Clause"
   }
  ]
 }
