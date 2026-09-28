@@ -7,7 +7,8 @@
  *   GET  /v1/maps             every bundled transliteration system code
  *   GET  /v1/maps/:code       one system's compiled map (JSON IR)
  *   POST /v1/transliterate    {system, input} -> {output}
- *   POST /v1/detect           {input, output} -> ranked systems
+ *   POST /v1/detect           {input, output} -> systems whose source
+ *                             script matches the input, ranked
  *   GET  /v1/models           the neural model index (IMF v1)
  *   GET  /v1/models/:id       one model's full entry
  *   POST /v1/infer            {model, input} -> {output} (Modal proxy)
