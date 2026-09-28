@@ -571,6 +571,14 @@
             "distance": 9
           },
           {
+            "mapName": "bgnpcgn-tuk-Cyrl-Latn-1979",
+            "distance": 9
+          },
+          {
+            "mapName": "bgnpcgn-tuk-Cyrl-Latn-1993",
+            "distance": 9
+          },
+          {
             "mapName": "bgnpcgn-ukr-Cyrl-Latn-1965",
             "distance": 9
           },
@@ -1258,7 +1266,7 @@
     "kind": "info",
     "result": {
       "data": {
-        "info": "{\"version\":\"v2.3.3\",\"interscript_version\":\"2.4.3\"}"
+        "info": "{\"version\":\"3.0.0-cloudflare.1\",\"engine\":\"interscript-ts@native-interpreter\"}"
       }
     }
   }
