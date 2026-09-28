@@ -72,10 +72,12 @@ npm run typecheck
 npm run lint
 ```
 
-Regenerating the map corpus (requires interscript-ruby + interscript-maps):
+Regenerating the map corpus (requires the interscript/maps and
+interscript-ts checkouts — the same TS converter that builds the
+interscript/maps release artifact):
 
 ```bash
-ruby scripts/build-maps.rb /path/to/interscript-ruby /path/to/maps ./maps
+node scripts/build-maps.mjs /path/to/interscript/maps /path/to/interscript-ts
 ```
 
 For production deploys, prefer a pinned release artifact from

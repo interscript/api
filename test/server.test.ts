@@ -53,8 +53,10 @@ describe("systemCodes", () => {
   it("lists the bundled corpus", async () => {
     const result = await gql("{ systemCodes }")
     const codes = result["systemCodes"] as string[]
-    expect(codes.length).toBe(287)
+    expect(codes.length).toBe(289)
     expect(codes).toContain("bgnpcgn-kat-Geor-Latn-2009")
+    // Dependency libraries ship as assets but are not user-addressable.
+    expect(codes).not.toContain("posix")
   })
 })
 
