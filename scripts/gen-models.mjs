@@ -8,6 +8,7 @@ const dir = process.env.INTERSCRIPT_ML_DIR ?? "../ml-models"
 const data = parse(readFileSync(`${dir}/models.yaml`, "utf8"))
 const fields = [
   "id",
+  "kind",
   "task",
   "scripts",
   "precision",

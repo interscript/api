@@ -27,6 +27,7 @@ import { InputTooLongError, MapNotFoundError } from "./errors.js"
 import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js"
 import { bundledSystemCodes } from "./engine.js"
 import { getModel, listModels, MODELS_INDEX_VERSION } from "./models.js"
+import { isEdgeIneligible, MlError, runModel } from "./ml.js"
 import { OPENAPI } from "./openapi.js"
 import { docsPage } from "./docs.js"
 
@@ -224,6 +225,27 @@ rest.post("/v1/infer", async (c) => {
   }
   if (!getModel(model)) {
     return errorResponse(404, "model_not_found", `Couldn't locate ${model}`)
+  }
+  // Edge-first (WO15): plane artifacts inside the worker memory budget
+  // execute IN-WORKER; anything else falls through to the proxy.
+  const preserve = (body as { preserve_diacritics?: boolean }).preserve_diacritics
+  try {
+    const req: { id: string; text: string; preserveDiacritics?: boolean } = {
+      id: model, text: input,
+    }
+    if (preserve !== undefined) req.preserveDiacritics = preserve
+    const output = await runModel(req)
+    return c.json({ model, input, output, executed: "in-worker" })
+  } catch (err) {
+    if (!isEdgeIneligible(err)) {
+      if (err instanceof MlError && err.status === 404) {
+        return errorResponse(404, "model_not_found", `Couldn't locate ${model}`)
+      }
+      if (err instanceof MlError && err.status === 502) {
+        return errorResponse(502, err.code, err.message)
+      }
+      throw err
+    }
   }
   const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {}) as Record<string, string | undefined>
   if (!ML_ENDPOINT || !ML_TOKEN) {
