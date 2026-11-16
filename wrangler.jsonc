@@ -28,6 +28,16 @@
     // a named "ML inference unavailable" error.
     "ML_ENDPOINT": "https://your-inference-service.example/infer"
   },
+  // The plane session probes for a node ONNX backend by dynamically
+  // importing "onnxruntime-node"; its binding.js template-requires
+  // native .node binaries that no bundler can carry into a Worker.
+  // The alias redirects the specifier to an in-repo stub (which throws
+  // on evaluation, handled by the backend probe) so wrangler's bundler
+  // never traverses the native binary. Corresponds with esbuild's
+  // `alias` option.
+  "alias": {
+    "onnxruntime-node": "./stubs/onnxruntime-node.js"
+  },
   // ML_TOKEN is a SECRET, not a var: set it with
   //   npx wrangler secret put ML_TOKEN
   "observability": { "enabled": true }

@@ -43,6 +43,16 @@ describe("npm package contents", () => {
     expect(pack().unpackedSize).toBeLessThan(1_000_000)
   })
 
+  it("keeps the node ONNX backend out of the published bundle", () => {
+    // The plane session dynamically imports "onnxruntime-node"; the
+    // build marks it external so the bundle only carries the import
+    // specifier. If the bundler ever absorbs the package, Workers
+    // deployments break on its native .node binaries.
+    const bundle = readFileSync("dist/src/index.js", "utf8")
+    expect(bundle).not.toContain("napi-v6")
+    expect(bundle).not.toContain("onnxruntime_binding")
+  })
+
   it("ships every file listed in package.json `files` (no phantom entries)", () => {
     const paths = pack().files.map((file) => file.path)
     for (const entry of pkg.files) {
