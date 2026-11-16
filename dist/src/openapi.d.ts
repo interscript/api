@@ -178,6 +178,77 @@ export declare const OPENAPI: {
                 };
             };
         };
+        readonly "/v1/infer/batch": {
+            readonly post: {
+                readonly tags: readonly ["inference"];
+                readonly summary: "Batch neural inference";
+                readonly description: "Up to 50 inputs per request against one model; per-item error isolation.";
+                readonly requestBody: {
+                    readonly required: true;
+                    readonly content: {
+                        readonly "application/json": {
+                            readonly schema: {
+                                readonly type: "object";
+                                readonly properties: {
+                                    readonly model: {
+                                        readonly type: "string";
+                                    };
+                                    readonly inputs: {
+                                        readonly type: "array";
+                                        readonly items: {
+                                            readonly type: "string";
+                                        };
+                                        readonly maxItems: 50;
+                                    };
+                                };
+                                readonly required: readonly ["model", "inputs"];
+                            };
+                        };
+                    };
+                };
+                readonly responses: {
+                    readonly "200": {
+                        readonly description: "Per-item results";
+                    };
+                    readonly "400": {
+                        readonly $ref: "#/components/responses/BadRequest";
+                    };
+                    readonly "404": {
+                        readonly $ref: "#/components/responses/NotFound";
+                    };
+                };
+            };
+        };
+        readonly "/v1/assets/{tag}/{file}": {
+            readonly get: {
+                readonly tags: readonly ["maps"];
+                readonly summary: "Release asset (CORS proxy)";
+                readonly description: "Streaming pass-through to GitHub Releases assets with permissive CORS.";
+                readonly parameters: readonly [{
+                    readonly name: "tag";
+                    readonly in: "path";
+                    readonly required: true;
+                    readonly schema: {
+                        readonly type: "string";
+                    };
+                }, {
+                    readonly name: "file";
+                    readonly in: "path";
+                    readonly required: true;
+                    readonly schema: {
+                        readonly type: "string";
+                    };
+                }];
+                readonly responses: {
+                    readonly "200": {
+                        readonly description: "Asset bytes";
+                    };
+                    readonly "404": {
+                        readonly $ref: "#/components/responses/NotFound";
+                    };
+                };
+            };
+        };
         readonly "/v1/infer": {
             readonly post: {
                 readonly tags: readonly ["inference"];
@@ -333,6 +404,16 @@ export declare const OPENAPI: {
                     readonly "application/json": {
                         readonly schema: {
                             readonly type: "object";
+                        };
+                    };
+                };
+            };
+            readonly BadRequest: {
+                readonly description: "Malformed request";
+                readonly content: {
+                    readonly "application/json": {
+                        readonly schema: {
+                            readonly $ref: "#/components/schemas/Error";
                         };
                     };
                 };

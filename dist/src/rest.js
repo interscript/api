@@ -7,7 +7,8 @@
  *   GET  /v1/maps             every bundled transliteration system code
  *   GET  /v1/maps/:code       one system's compiled map (JSON IR)
  *   POST /v1/transliterate    {system, input} -> {output}
- *   POST /v1/detect           {input, output} -> ranked systems
+ *   POST /v1/detect           {input, output} -> systems whose source
+ *                             script matches the input, ranked
  *   GET  /v1/models           the neural model index (IMF v1)
  *   GET  /v1/models/:id       one model's full entry
  *   POST /v1/infer            {model, input} -> {output} (Modal proxy)
@@ -21,6 +22,7 @@ import { InputTooLongError, MapNotFoundError } from "./errors.js";
 import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js";
 import { bundledSystemCodes } from "./engine.js";
 import { getModel, listModels, MODELS_INDEX_VERSION } from "./models.js";
+import { isEdgeIneligible, MlError, runModel } from "./ml.js";
 import { OPENAPI } from "./openapi.js";
 import { docsPage } from "./docs.js";
 function errorResponse(status, code, message) {
@@ -116,12 +118,80 @@ rest.post("/v1/detect", async (c) => {
     const results = await detectResolver(input, output);
     return c.json({ count: results.length, results });
 });
+const RELEASE_BASE = "https://github.com/interscript/interscript-ml/releases/download";
+/**
+ * CORS-enabled streaming proxy for release assets (TODO.client-work 13):
+ * browsers cannot fetch GH Releases directly — the github.com redirect
+ * hop carries no Access-Control-Allow-Origin. Releases stay the origin
+ * of truth; this is the edge front door on the API's own domain.
+ */
+rest.get("/v1/assets/*", async (c) => {
+    const path = c.req.path.replace(/^\/v1\/assets\//, "");
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]*\/[A-Za-z0-9][A-Za-z0-9._.-]*$/.test(path)) {
+        return errorResponse(400, "bad_request", "path must be {tag}/{file}");
+    }
+    const upstream = await fetch(`${RELEASE_BASE}/${path}`).catch(() => null);
+    if (!upstream || !upstream.ok) {
+        return errorResponse(404, "asset_not_found", `Couldn't locate ${path}`);
+    }
+    const headers = new Headers();
+    headers.set("access-control-allow-origin", "*");
+    headers.set("content-type", upstream.headers.get("content-type") ?? "application/octet-stream");
+    const length = upstream.headers.get("content-length");
+    if (length)
+        headers.set("content-length", length);
+    return new Response(upstream.body, { status: upstream.status, headers });
+});
 rest.get("/v1/models", (c) => c.json({ count: listModels().length, models: listModels() }));
 rest.get("/v1/models/:id", (c) => {
     const model = getModel(c.req.param("id"));
     if (!model)
         return errorResponse(404, "model_not_found", `Couldn't locate ${c.req.param("id")}`);
     return c.json(model);
+});
+rest.post("/v1/infer/batch", async (c) => {
+    // TODO.client-work 10: N inputs per request against one model;
+    // per-item isolation — one bad input cannot fail the batch.
+    const body = await c.req.json().catch(() => null);
+    const { model, inputs } = (body ?? {});
+    if (typeof model !== "string" || !Array.isArray(inputs) || inputs.length === 0) {
+        return errorResponse(400, "bad_request", "body must be JSON {model, inputs: string[]}");
+    }
+    if (inputs.length > 50) {
+        return errorResponse(400, "bad_request", "batch limited to 50 inputs");
+    }
+    if (inputs.some((i) => typeof i !== "string")) {
+        return errorResponse(400, "bad_request", "inputs must all be strings");
+    }
+    if (!getModel(model)) {
+        return errorResponse(404, "model_not_found", `Couldn't locate ${model}`);
+    }
+    const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {});
+    if (!ML_ENDPOINT || !ML_TOKEN) {
+        return errorResponse(503, "inference_unconfigured", "ML_ENDPOINT/ML_TOKEN are not set");
+    }
+    const results = await Promise.all(inputs.map(async (input) => {
+        try {
+            const upstream = await fetch(`${ML_ENDPOINT}/infer`, {
+                method: "POST",
+                headers: { "content-type": "application/json", "x-api-key": ML_TOKEN },
+                body: JSON.stringify({ model, input }),
+                signal: AbortSignal.timeout(INFER_TIMEOUT_MS),
+            }).catch(() => null);
+            if (!upstream || !upstream.ok) {
+                return { input, output: null, error: "inference_upstream" };
+            }
+            const r = (await upstream.json().catch(() => null));
+            if (!r || typeof r.output !== "string") {
+                return { input, output: null, error: "inference_upstream" };
+            }
+            return { input, output: r.output, error: null };
+        }
+        catch {
+            return { input, output: null, error: "inference_upstream" };
+        }
+    }));
+    return c.json({ model, count: results.length, results });
 });
 rest.post("/v1/infer", async (c) => {
     const body = await c.req.json().catch(() => null);
@@ -131,6 +201,30 @@ rest.post("/v1/infer", async (c) => {
     }
     if (!getModel(model)) {
         return errorResponse(404, "model_not_found", `Couldn't locate ${model}`);
+    }
+    // Edge-first (WO15): plane artifacts inside the worker memory budget
+    // execute IN-WORKER; anything else falls through to the proxy.
+    const preserve = body.preserve_diacritics;
+    try {
+        const req = {
+            id: model,
+            text: input,
+        };
+        if (preserve !== undefined)
+            req.preserveDiacritics = preserve;
+        const output = await runModel(req);
+        return c.json({ model, input, output, executed: "in-worker" });
+    }
+    catch (err) {
+        if (!isEdgeIneligible(err)) {
+            if (err instanceof MlError && err.status === 404) {
+                return errorResponse(404, "model_not_found", `Couldn't locate ${model}`);
+            }
+            if (err instanceof MlError && err.status === 502) {
+                return errorResponse(502, err.code, err.message);
+            }
+            throw err;
+        }
     }
     const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {});
     if (!ML_ENDPOINT || !ML_TOKEN) {
@@ -144,6 +238,11 @@ rest.post("/v1/infer", async (c) => {
     }).catch(() => null);
     if (!upstream || !upstream.ok) {
         const detail = upstream ? await upstream.text().catch(() => "") : "upstream unreachable";
+        if (upstream && upstream.status >= 400 && upstream.status < 500) {
+            // upstream rejected the request itself (unknown model, task not
+            // served, oversized input) — pass the status + detail through
+            return errorResponse(upstream.status, "inference_rejected", detail.slice(0, 500));
+        }
         return errorResponse(502, "inference_upstream", detail.slice(0, 500));
     }
     const result = (await upstream.json());

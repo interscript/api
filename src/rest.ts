@@ -232,7 +232,8 @@ rest.post("/v1/infer", async (c) => {
   const preserve = (body as { preserve_diacritics?: boolean }).preserve_diacritics
   try {
     const req: { id: string; text: string; preserveDiacritics?: boolean } = {
-      id: model, text: input,
+      id: model,
+      text: input,
     }
     if (preserve !== undefined) req.preserveDiacritics = preserve
     const output = await runModel(req)

@@ -4,7 +4,11 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "lib": ["ES2022"],
-    "types": ["@cloudflare/workers-types", "node"],
+    // Ambient Workers runtime types come from the generated
+    // worker-configuration.d.ts (npm run gen:types); "node" covers the
+    // vitest/test surface. @cloudflare/workers-types is superseded by
+    // the generated file.
+    "types": ["node"],
     "strict": true,
     "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
@@ -15,5 +19,5 @@
     "outDir": "dist",
     "skipLibCheck": true
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "worker-configuration.d.ts"]
 }

@@ -4,6 +4,8 @@
  */
 import { configure, transliterateAsync } from "interscript";
 import { bundledSystemCodes, detectableSystemCodes, loadMap } from "./maps.js";
+import { mapScripts } from "../maps/scripts.js";
+import { detectInputScript, sourceMatchesScript } from "./scripts.js";
 let configuredFor;
 function ensureEngine(assets) {
     if (configuredFor === assets)
@@ -33,14 +35,22 @@ function levenshtein(a, b) {
     }
     return prev[b.length];
 }
-// Mirrors interscript-ruby's detector: transliterate the input through
-// every system, rank by Levenshtein distance to the output. Systems
-// that fail (including ML-powered maps with no runtime configured) are
-// skipped, exactly as the Ruby detector rescues per-map errors.
+// Transliterate the input through every system whose source script
+// matches the input, rank by Levenshtein distance to the output.
+// Systems that fail (including ML-powered maps with no runtime
+// configured) are skipped, exactly as the Ruby detector rescues
+// per-map errors. The full-corpus walk is gone deliberately: it
+// exceeded the Workers CPU budget (1102s in production).
 export async function detect(assets, input, output) {
     ensureEngine(assets);
+    // Only systems whose source script matches the input can rank: walking
+    // all 288 maps exhausts the Workers CPU budget (1102s in production).
+    const detected = detectInputScript(input);
+    const codes = detected
+        ? detectableSystemCodes().filter((code) => sourceMatchesScript(mapScripts[code], detected))
+        : [];
     const candidates = [];
-    for (const code of detectableSystemCodes()) {
+    for (const code of codes) {
         try {
             const transliterated = await transliterateAsync(code, input);
             candidates.push({ mapName: code, distance: levenshtein(transliterated, output) });

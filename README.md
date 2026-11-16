@@ -58,18 +58,23 @@ Minimal `wrangler.jsonc`:
 }
 ```
 
-with `src/index.ts` re-exporting the package, then `wrangler deploy`.
+A canonical `wrangler.jsonc` ships in this repository (no routes, no
+secrets) — start from it, add your route, then `wrangler deploy`. If you
+edit the config, regenerate the ambient runtime types with
+`npm run gen:types` (writes `worker-configuration.d.ts`).
 See the [deployment repo](https://github.com/interscript/api.interscript.org)
-for a complete, working example.
+for a complete, working example (it pins this package and fetches a
+release map artifact — the deploy commands there stay owner-run).
 
 ## Development
 
 ```bash
 npm install
-npm run build          # tsc
-npm test               # vitest
+npm run build          # tsc + esbuild bundle
+npm test               # vitest (incl. the production parity gate)
 npm run typecheck
 npm run lint
+npm run gen:types      # regenerate worker-configuration.d.ts after wrangler.jsonc edits
 ```
 
 Regenerating the map corpus (requires the interscript/maps and

@@ -135,6 +135,36 @@ describe("REST models + inference", () => {
         const missing = await get("/v1/models/nope-9.9");
         expect(missing.status).toBe(404);
     });
+    it("POST /v1/infer passes upstream 4xx status through (not 502)", async () => {
+        const stubEnv = {
+            ASSETS: assets,
+            ML_ENDPOINT: "https://ml-stub.example",
+            ML_TOKEN: "t",
+        };
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = (async (url) => {
+            if (String(url).includes("ml-stub.example")) {
+                return new Response(JSON.stringify({ detail: "model x task translit is not served" }), {
+                    status: 400,
+                    headers: { "content-type": "application/json" },
+                });
+            }
+            return originalFetch(url);
+        });
+        try {
+            const res = await app.request("https://example.org/v1/infer", {
+                method: "POST",
+                headers: JSON_HEADERS,
+                body: JSON.stringify({ model: "khm-latn-1.0", input: "x" }),
+            }, stubEnv);
+            expect(res.status).toBe(400);
+            const body = (await res.json());
+            expect(body.error.code).not.toBe("inference_upstream");
+        }
+        finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
     it("POST /v1/infer validates without an upstream configured", async () => {
         const unconfigured = await post("/v1/infer", { model: "heb-diac-1.0", input: "x" });
         expect(unconfigured.status).toBe(503);
@@ -142,5 +172,45 @@ describe("REST models + inference", () => {
         expect(unknownModel.status).toBe(404);
         const badBody = await post("/v1/infer", { model: 1, input: "x" });
         expect(badBody.status).toBe(400);
+    });
+});
+describe("POST /v1/infer/batch", () => {
+    it("validates without an upstream and rejects unknown models", async () => {
+        const bad = await post("/v1/infer/batch", { model: "nope-9.9", inputs: ["x"] });
+        expect(bad.status).toBe(404);
+        const shape = await post("/v1/infer/batch", { model: "heb-diac-1.0", inputs: [] });
+        expect(shape.status).toBe(400);
+        const many = await post("/v1/infer/batch", {
+            model: "heb-diac-1.0",
+            inputs: Array(51).fill("x"),
+        });
+        expect(many.status).toBe(400);
+    });
+});
+describe("GET /v1/assets/* (CORS release proxy)", () => {
+    it("streams release assets with permissive CORS and passthrough status", async () => {
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = (async (url) => {
+            if (String(url).includes("releases/download")) {
+                return new Response("asset-bytes", {
+                    status: 200,
+                    headers: { "content-type": "application/octet-stream" },
+                });
+            }
+            return originalFetch(url);
+        });
+        try {
+            const res = await get("/v1/assets/index-v2/models-index.yaml");
+            expect(res.status).toBe(200);
+            expect(res.headers.get("access-control-allow-origin")).toBe("*");
+            expect(await res.text()).toBe("asset-bytes");
+        }
+        finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+    it("rejects encoded traversal within the assets path", async () => {
+        const res = await get("/v1/assets/index-v2/..%2fsecret.yaml");
+        expect([400, 404]).toContain(res.status);
     });
 });

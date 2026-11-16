@@ -85,7 +85,8 @@ export async function runModel(req: MlRequest): Promise<string> {
   const kind = (entry as { kind?: string }).kind ?? "imf-v1"
   if (kind !== "plane") {
     throw new MlError(
-      501, "kind_not_edge_executable",
+      501,
+      "kind_not_edge_executable",
       `kind '${kind}' does not run in-worker yet; use the interscript runtime (py/ruby/ts)`,
     )
   }
@@ -93,10 +94,13 @@ export async function runModel(req: MlRequest): Promise<string> {
     throw new MlError(503, "artifact_unresolvable", "model has no release artifact")
   }
   const artifact: PlaneArtifact = {
-    url: entry.url, sha256: entry.sha256, size: entry.size ?? undefined,
+    url: entry.url,
+    sha256: entry.sha256,
+    size: entry.size ?? undefined,
   }
   const args: Parameters<typeof executePlane>[0] = {
-    artifact, text: req.text,
+    artifact,
+    text: req.text,
   }
   if (req.preserveDiacritics !== undefined) {
     args.preserveDiacritics = req.preserveDiacritics
@@ -114,7 +118,8 @@ export async function executePlane(args: ExecutePlaneArgs): Promise<string> {
   const { artifact, text } = args
   if ((artifact.size ?? 0) > WORKER_MODEL_MAX_BYTES) {
     throw new MlError(
-      503, "model_too_large_for_worker",
+      503,
+      "model_too_large_for_worker",
       `artifact exceeds the in-worker budget (${WORKER_MODEL_MAX_BYTES} bytes); ` +
         `workerd isolates cap at 128 MB. Run via the interscript runtime ` +
         `(py/ruby/ts) or a self-hosted inference service.`,

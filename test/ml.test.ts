@@ -46,7 +46,9 @@ describe("executePlane (real fetch -> verify -> session -> decode)", () => {
 
   it("preserve mode round-trips user diacritics", async () => {
     const out = await executePlane({
-      artifact: artifact(), text: "كُتُبُ", preserveDiacritics: true,
+      artifact: artifact(),
+      text: "كُتُبُ",
+      preserveDiacritics: true,
     })
     expect(out).toBe("كُتُبُ")
   })
@@ -90,9 +92,7 @@ describe("POST /v1/infer edge-first dispatch", () => {
       body: JSON.stringify({ model: "does-not-exist", input: "x" }),
     })
     expect(res.status).toBe(404)
-    expect(((await res.json()) as { error: { code: string } }).error.code).toBe(
-      "model_not_found",
-    )
+    expect(((await res.json()) as { error: { code: string } }).error.code).toBe("model_not_found")
   })
 
   it("falls back to the proxy (503 unconfigured) for oversized plane artifacts", async () => {

@@ -13,6 +13,12 @@ const ENDPOINTS = [
     { method: "GET", path: "/v1/models", note: "neural model index (IMF v1)" },
     { method: "GET", path: "/v1/models/{id}", note: "one model's metadata" },
     { method: "POST", path: "/v1/infer", note: "{model, input} → {output}" },
+    { method: "POST", path: "/v1/infer/batch", note: "{model, inputs[]} → per-item results (≤50)" },
+    {
+        method: "GET",
+        path: "/v1/assets/{tag}/{file}",
+        note: "CORS streaming proxy for release assets",
+    },
     { method: "POST", path: "/graphql", note: "GraphQL endpoint (introspection enabled)" },
     { method: "GET", path: "/openapi.json", note: "OpenAPI 3.1 document" },
 ];
