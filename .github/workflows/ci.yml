@@ -13,9 +13,14 @@ jobs:
       - uses: actions/setup-node@v7
         with: { node-version: "22" }
       - run: npm install
+      - name: Generated Worker types are fresh (wrangler types)
+        run: |
+          npm run gen:types
+          git diff --exit-code worker-configuration.d.ts
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run format:check
+      - run: npm run build
       - name: Tests + production parity gate
         run: npx vitest run
   build:
@@ -26,5 +31,7 @@ jobs:
         with: { node-version: "22" }
       - run: npm install
       - run: npm run build
+      # Strict bundle smoke: validate wrangler.jsonc and the full worker
+      # bundle without credentials. A failure fails the job.
       - name: Bundle smoke (wrangler dry run, no credentials)
-        run: npx wrangler deploy --dry-run --outdir dist-worker || true
+        run: npx wrangler deploy --dry-run --outdir dist-worker

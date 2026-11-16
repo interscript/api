@@ -9,7 +9,8 @@
     ".": {
       "types": "./dist/src/index.d.ts",
       "default": "./dist/src/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist/src/index.js",
@@ -28,6 +29,7 @@
     "format": "prettier --write src test scripts",
     "format:check": "prettier --check src test scripts",
     "typecheck": "tsc --noEmit",
+    "gen:types": "wrangler types",
     "fixtures:record": "node scripts/record-fixtures.mjs",
     "gen:models": "node scripts/gen-models.mjs && prettier --write src/generated/models.json",
     "e2e": "node scripts/e2e.mjs"
@@ -35,10 +37,9 @@
   "dependencies": {
     "graphql-yoga": "^5.0.0",
     "hono": "^4.13.7",
-    "interscript": "^4.0.0"
+    "interscript": "^5.14.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260811.1",
     "@eslint/js": "^9.0.0",
     "@types/node": "^26.2.0",
     "esbuild": "^0.28.2",

@@ -1,0 +1,34 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The software repo's canonical self-deploy config: everything a
+  // private deployment needs, nothing organization-specific (no routes,
+  // no secrets — set those in your own deployment repo or dashboard;
+  // Interscript's own deployment lives in interscript/api.interscript.org).
+  //
+  // Regenerate the ambient runtime types after editing this file:
+  //   npm run gen:types   (writes worker-configuration.d.ts)
+  "name": "interscript-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-01",
+  // The engine's node loaders are lazily imported; nodejs_compat makes
+  // those lazy imports tolerable in the Workers runtime.
+  "compatibility_flags": ["nodejs_compat"],
+  // Bundled map corpus: static assets served from the edge cache
+  // (immutable per deploy); the ASSETS binding is the software's map
+  // loader. Fetch/extract a pinned interscript/maps JSON-IR artifact
+  // into ./maps first (do not copy maps from the npm package).
+  "assets": {
+    "directory": "./maps",
+    "binding": "ASSETS"
+  },
+  "vars": {
+    // ML inference endpoint (POST {model, input} -> {output} with
+    // x-api-key auth). Self-hosters point this at their own inference
+    // service; unset (with ML_TOKEN) means the ml surface answers with
+    // a named "ML inference unavailable" error.
+    "ML_ENDPOINT": "https://your-inference-service.example/infer"
+  },
+  // ML_TOKEN is a SECRET, not a var: set it with
+  //   npx wrangler secret put ML_TOKEN
+  "observability": { "enabled": true }
+}

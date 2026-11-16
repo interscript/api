@@ -115,6 +115,48 @@ export const OPENAPI = {
                 },
             },
         },
+        "/v1/infer/batch": {
+            post: {
+                tags: ["inference"],
+                summary: "Batch neural inference",
+                description: "Up to 50 inputs per request against one model; per-item error isolation.",
+                requestBody: {
+                    required: true,
+                    content: {
+                        "application/json": {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    model: { type: "string" },
+                                    inputs: { type: "array", items: { type: "string" }, maxItems: 50 },
+                                },
+                                required: ["model", "inputs"],
+                            },
+                        },
+                    },
+                },
+                responses: {
+                    "200": { description: "Per-item results" },
+                    "400": { $ref: "#/components/responses/BadRequest" },
+                    "404": { $ref: "#/components/responses/NotFound" },
+                },
+            },
+        },
+        "/v1/assets/{tag}/{file}": {
+            get: {
+                tags: ["maps"],
+                summary: "Release asset (CORS proxy)",
+                description: "Streaming pass-through to GitHub Releases assets with permissive CORS.",
+                parameters: [
+                    { name: "tag", in: "path", required: true, schema: { type: "string" } },
+                    { name: "file", in: "path", required: true, schema: { type: "string" } },
+                ],
+                responses: {
+                    "200": { description: "Asset bytes" },
+                    "404": { $ref: "#/components/responses/NotFound" },
+                },
+            },
+        },
         "/v1/infer": {
             post: {
                 tags: ["inference"],
@@ -222,6 +264,10 @@ export const OPENAPI = {
             Ok: {
                 description: "Success",
                 content: { "application/json": { schema: { type: "object" } } },
+            },
+            BadRequest: {
+                description: "Malformed request",
+                content: { "application/json": { schema: { $ref: "#/components/schemas/Error" } } },
             },
             NotFound: {
                 description: "Unknown system or model",
