@@ -59,9 +59,13 @@ Minimal `wrangler.jsonc`:
 ```
 
 A canonical `wrangler.jsonc` ships in this repository (no routes, no
-secrets) — start from it, add your route, then `wrangler deploy`. If you
-edit the config, regenerate the ambient runtime types with
-`npm run gen:types` (writes `worker-configuration.d.ts`).
+secrets) — start from it, add your route, then `wrangler deploy`. It
+includes an `alias` entry that redirects the engine's optional
+`onnxruntime-node` probe to a stub (`stubs/onnxruntime-node.js`) so the
+Worker bundle never traverses the native binary; if your own config
+hits a "No loader is configured for \".node\" files" error, add the same
+alias. If you edit the config, regenerate the ambient runtime types
+with `npm run gen:types` (writes `worker-configuration.d.ts`).
 See the [deployment repo](https://github.com/interscript/api.interscript.org)
 for a complete, working example (it pins this package and fetches a
 release map artifact — the deploy commands there stay owner-run).

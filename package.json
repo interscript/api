@@ -19,10 +19,11 @@
     "dist/src/schema.d.ts",
     "dist/src/resolvers.d.ts",
     "dist/src/limits.d.ts",
-    "dist/src/generated/models.json"
+    "dist/src/generated/models.json",
+    "stubs/onnxruntime-node.js"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json && esbuild src/index.ts --bundle --platform=neutral --format=esm --minify --outfile=dist/src/index.js --external:node:* --external:hono --external:graphql-yoga --external:@whatwg-node/fetch",
+    "build": "tsc -p tsconfig.json && esbuild src/index.ts --bundle --platform=neutral --format=esm --minify --outfile=dist/src/index.js --external:node:* --external:hono --external:graphql-yoga --external:@whatwg-node/fetch --external:onnxruntime-node",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint src test",
