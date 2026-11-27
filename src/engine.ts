@@ -1,6 +1,7 @@
 /**
  * Engine wiring: the native async interpreter from interscript-ts over
- * the assets-backed map loader. No regex compilation, ever.
+ * the assets-backed map loader. No regex compilation, ever — in this
+ * layer (ADR 0001); the vendored engine's own internals are exempt.
  */
 import { configure, transliterateAsync, type SystemCode } from "interscript"
 import { bundledSystemCodes, detectableSystemCodes, loadMap, type MapAssets } from "./maps.js"
