@@ -16,7 +16,6 @@ import {
   setMl,
   systemCodesResolver,
   transliterateResolver,
-  type Env,
 } from "./resolvers.js"
 
 const yoga = createYoga({
@@ -47,6 +46,8 @@ app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }))
 app.route("/", rest)
 
 app.all("*", async (c) => {
+  // The generated Env (worker-configuration.d.ts + src/env.d.ts); the
+  // cast is for callers without a Workers env (tests, edge runtimes).
   const env = c.env as Env | undefined
   if (env?.ASSETS) setAssets(env.ASSETS)
   setMl(env?.ML_ENDPOINT, env?.ML_TOKEN)

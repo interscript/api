@@ -6,6 +6,9 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { app } from "../src/server.js";
+// env is the GENERATED Env (worker-configuration.d.ts + src/env.d.ts).
+// The ASSETS double mirrors the real binding's Fetcher shape (fetch +
+// connect); only fetch is exercised by the parity replay.
 const env = {
     ASSETS: {
         fetch: async (url) => {
@@ -18,6 +21,9 @@ const env = {
             catch {
                 return new Response(null, { status: 404 });
             }
+        },
+        connect: () => {
+            throw new Error("connect is unsupported by the filesystem ASSETS double");
         },
     },
 };

@@ -22,7 +22,11 @@ describe("npm package contents", () => {
     const pkg = JSON.parse(readFileSync("package.json", "utf8"));
     it("does not publish the map corpus as package files", () => {
         const paths = pack().files.map((file) => file.path);
-        expect(paths.some((path) => path.startsWith("maps/") && path.endsWith(".json"))).toBe(false);
+        // The map corpus (and anything else under maps/) is a deployment
+        // artifact fetched from interscript/maps releases — never a
+        // package file. This is the guard that failed when a shipped
+        // package.json listed `maps` in files (251MB tarball).
+        expect(paths.some((path) => path.startsWith("maps/"))).toBe(false);
         expect(paths.some((path) => path.startsWith("dist/test/"))).toBe(false);
         expect(paths.some((path) => path === "dist/src/maps.js")).toBe(false);
         expect(pack().unpackedSize).toBeLessThan(1_000_000);

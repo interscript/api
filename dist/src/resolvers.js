@@ -3,11 +3,15 @@
  * arrives via the Yoga context (yoga.fetch(request, env, ctx)).
  */
 import { MapNotFoundError as EngineMapNotFoundError } from "interscript";
-import { detect, transliterate } from "./engine.js";
+import { detect, transliterate, bundledSystemCodes } from "./engine.js";
 import { InputTooLongError, MapNotFoundError } from "./errors.js";
 import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js";
-import { bundledSystemCodes } from "./engine.js";
 export const API_VERSION = "3.0.0-cloudflare.1";
+// The Worker env type is the GENERATED Env (worker-configuration.d.ts,
+// `npm run gen:types`) merged with the deployment-supplied bindings in
+// src/env.d.ts. No binding interface is declared here; the map-loader
+// contract the engine consumes is MapAssets (maps.ts), which the
+// generated `ASSETS: Fetcher` binding satisfies structurally.
 // The ASSETS binding is constant for an isolate's lifetime; the Hono
 // handler sets it once from c.env (threaded correctly by Hono in both
 // Workers and tests).

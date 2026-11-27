@@ -1,15 +1,8 @@
+import type { MapAssets } from "./maps.js";
 export declare const API_VERSION = "3.0.0-cloudflare.1";
-export interface AssetsBinding {
-    fetch(url: string): Promise<Response>;
-}
-export interface Env {
-    ASSETS?: AssetsBinding;
-    ML_ENDPOINT?: string;
-    ML_TOKEN?: string;
-}
-export declare function setAssets(binding: AssetsBinding): void;
+export declare function setAssets(binding: MapAssets): void;
 export declare function setMl(endpoint: string | undefined, token: string | undefined): void;
-export declare function requireAssets(): AssetsBinding;
+export declare function requireAssets(): MapAssets;
 export declare function info(): Promise<string>;
 export declare function systemCodesResolver(): string[];
 export declare function transliterateResolver(systemCode: string, input: string): Promise<string>;

@@ -17,7 +17,6 @@
  * compatibility with the Ruby API's {proxy+} behavior).
  */
 import { Hono } from "hono";
-import { type Env } from "./resolvers.js";
 export declare const rest: Hono<{
     Bindings: Env;
 }, import("hono/types").BlankSchema, "/">;

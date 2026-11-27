@@ -16,7 +16,7 @@ Field-for-field identical to the long-running Ruby API:
 | field                                | behavior                        |
 | ------------------------------------ | ------------------------------- |
 | `info`                               | version JSON                    |
-| `systemCodes`                        | all 287 transliteration systems |
+| `systemCodes`                        | all 289 bundled transliteration systems |
 | `transliterate(systemCode!, input!)` | transliterate (1MB input cap)   |
 | `detect(input!, output!)`            | ranked `[{mapName, distance}]`  |
 
@@ -27,7 +27,7 @@ Error strings match byte-for-byte (`Couldn't locate <code>`).
 - **Engine**: the native async interpreter from
   [`interscript-ts`](https://github.com/interscript/interscript-ts) —
   no regex compilation.
-- **Maps**: the full corpus (287 systems + 4 dependency libraries,
+- **Maps**: the full corpus (289 systems + 4 dependency libraries,
   compiled to schema-versioned JSON IR from interscript-maps) is a
   deploy-time asset, not part of this npm package. Deployment repos fetch
   a pinned map artifact from `interscript/maps`, verify it, and expose it
@@ -66,6 +66,10 @@ Worker bundle never traverses the native binary; if your own config
 hits a "No loader is configured for \".node\" files" error, add the same
 alias. If you edit the config, regenerate the ambient runtime types
 with `npm run gen:types` (writes `worker-configuration.d.ts`).
+Deployment-supplied bindings that `wrangler types` cannot see — the
+`ML_ENDPOINT` var and the `ML_TOKEN` secret — are typed in
+`src/env.d.ts` (declaration merging into the generated `Env`); point
+`ML_ENDPOINT` at your inference service and set the token as a secret.
 See the [deployment repo](https://github.com/interscript/api.interscript.org)
 for a complete, working example (it pins this package and fetches a
 release map artifact — the deploy commands there stay owner-run).

@@ -9,6 +9,8 @@ import { app } from "../src/server.js"
 
 // Test double of the Workers ASSETS binding: the same maps directory the
 // deployer ships as static assets, served from the local filesystem.
+// Shaped like the real binding's Fetcher (fetch + connect); the tests
+// exercise fetch only.
 const assets = {
   fetch: async (url: RequestInfo): Promise<Response> => {
     const path = typeof url === "string" ? url : url.url
@@ -20,6 +22,9 @@ const assets = {
     } catch {
       return new Response(null, { status: 404 })
     }
+  },
+  connect: (): Socket => {
+    throw new Error("connect is unsupported by the filesystem ASSETS double")
   },
 }
 const env = { ASSETS: assets }
