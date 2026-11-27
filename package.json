@@ -18,6 +18,7 @@
     "dist/src/server.d.ts",
     "dist/src/schema.d.ts",
     "dist/src/resolvers.d.ts",
+    "dist/src/maps.d.ts",
     "dist/src/limits.d.ts",
     "dist/src/generated/models.json",
     "stubs/onnxruntime-node.js"

@@ -34,6 +34,8 @@ app.use("*", cors({ origin: "*", allowMethods: ["GET", "POST", "OPTIONS"] }));
 // catch-all so /v1/* and / serve REST; everything else stays GraphQL.
 app.route("/", rest);
 app.all("*", async (c) => {
+    // The generated Env (worker-configuration.d.ts + src/env.d.ts); the
+    // cast is for callers without a Workers env (tests, edge runtimes).
     const env = c.env;
     if (env?.ASSETS)
         setAssets(env.ASSETS);

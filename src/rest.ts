@@ -17,13 +17,7 @@
  * compatibility with the Ruby API's {proxy+} behavior).
  */
 import { Hono } from "hono"
-import {
-  API_VERSION,
-  detectResolver,
-  setAssets,
-  transliterateResolver,
-  type Env,
-} from "./resolvers.js"
+import { API_VERSION, detectResolver, setAssets, transliterateResolver } from "./resolvers.js"
 import { InputTooLongError, MapNotFoundError } from "./errors.js"
 import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js"
 import { bundledSystemCodes } from "./engine.js"
@@ -36,6 +30,8 @@ function errorResponse(status: number, code: string, message: string) {
   return Response.json({ error: { code, message } }, { status })
 }
 
+// Bindings come from the generated Env (worker-configuration.d.ts +
+// src/env.d.ts declaration merge).
 export const rest = new Hono<{ Bindings: Env }>()
 
 const wantsHtml = (accept: string | undefined): boolean =>
@@ -189,7 +185,9 @@ rest.post("/v1/infer/batch", async (c) => {
   if (!getModel(model)) {
     return errorResponse(404, "model_not_found", `Couldn't locate ${model}`)
   }
-  const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {}) as Record<string, string | undefined>
+  // Hono types c.env as always present, but outside a Workers runtime
+  // (direct rest.request calls, tests) there is no env at all.
+  const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {}) as Partial<Env>
   if (!ML_ENDPOINT || !ML_TOKEN) {
     return errorResponse(503, "inference_unconfigured", "ML_ENDPOINT/ML_TOKEN are not set")
   }
@@ -249,7 +247,8 @@ rest.post("/v1/infer", async (c) => {
       throw err
     }
   }
-  const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {}) as Record<string, string | undefined>
+  // As in /v1/infer/batch: env may be absent outside a Workers runtime.
+  const { ML_ENDPOINT, ML_TOKEN } = (c.env ?? {}) as Partial<Env>
   if (!ML_ENDPOINT || !ML_TOKEN) {
     return errorResponse(
       503,

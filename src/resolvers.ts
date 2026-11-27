@@ -3,29 +3,25 @@
  * arrives via the Yoga context (yoga.fetch(request, env, ctx)).
  */
 import { MapNotFoundError as EngineMapNotFoundError } from "interscript"
-import { detect, transliterate } from "./engine.js"
+import { detect, transliterate, bundledSystemCodes } from "./engine.js"
 import { InputTooLongError, MapNotFoundError } from "./errors.js"
 import { INFER_TIMEOUT_MS, LIMITS } from "./limits.js"
-import { bundledSystemCodes } from "./engine.js"
+import type { MapAssets } from "./maps.js"
 
 export const API_VERSION = "3.0.0-cloudflare.1"
 
-export interface AssetsBinding {
-  fetch(url: string): Promise<Response>
-}
-
-export interface Env {
-  ASSETS?: AssetsBinding
-  ML_ENDPOINT?: string
-  ML_TOKEN?: string
-}
+// The Worker env type is the GENERATED Env (worker-configuration.d.ts,
+// `npm run gen:types`) merged with the deployment-supplied bindings in
+// src/env.d.ts. No binding interface is declared here; the map-loader
+// contract the engine consumes is MapAssets (maps.ts), which the
+// generated `ASSETS: Fetcher` binding satisfies structurally.
 
 // The ASSETS binding is constant for an isolate's lifetime; the Hono
 // handler sets it once from c.env (threaded correctly by Hono in both
 // Workers and tests).
-let assets: AssetsBinding | undefined
+let assets: MapAssets | undefined
 
-export function setAssets(binding: AssetsBinding): void {
+export function setAssets(binding: MapAssets): void {
   assets = binding
 }
 
@@ -62,7 +58,7 @@ async function infer(model: string, input: string): Promise<string> {
   return out.output
 }
 
-export function requireAssets(): AssetsBinding {
+export function requireAssets(): MapAssets {
   if (!assets) {
     throw new Error("ASSETS binding missing — see README deployment notes")
   }

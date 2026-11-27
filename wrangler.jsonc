@@ -21,13 +21,19 @@
     "directory": "./maps",
     "binding": "ASSETS"
   },
-  "vars": {
-    // ML inference endpoint (POST {model, input} -> {output} with
-    // x-api-key auth). Self-hosters point this at their own inference
-    // service; unset (with ML_TOKEN) means the ml surface answers with
-    // a named "ML inference unavailable" error.
-    "ML_ENDPOINT": "https://your-inference-service.example/infer"
-  },
+  // ML_ENDPOINT and ML_TOKEN are deployment-supplied, NOT declared
+  // here: this software's config carries no placeholder endpoint, and
+  // `vars` would pin ML_ENDPOINT to a compile-time literal type in the
+  // generated Env for every deployment that overrides it. Both are
+  // typed (optional string) in src/env.d.ts via declaration merging
+  // into the generated Env — the documented pattern for bindings
+  // `wrangler types` cannot see (secrets, deployment vars).
+  //   ML_ENDPOINT: POST {model, input} -> {output} with x-api-key auth
+  //     (set as a var/secret in YOUR deployment config). Unset (with
+  //     ML_TOKEN) means the ml surface answers with a named "ML
+  //     inference unavailable" error.
+  //   ML_TOKEN is a SECRET, not a var: set it with
+  //     npx wrangler secret put ML_TOKEN
   // The plane session probes for a node ONNX backend by dynamically
   // importing "onnxruntime-node"; its binding.js template-requires
   // native .node binaries that no bundler can carry into a Worker.

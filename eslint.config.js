@@ -13,4 +13,21 @@ export default [
       ],
     },
   },
+  {
+    // Workers plane discipline: a promise that is never awaited or
+    // returned silently drops errors and work (workerd cancels it when
+    // the event loop drains). Type-aware rules need the tsconfig
+    // project; src/ and test/ are its only members.
+    files: ["src/**/*.ts", "test/**/*.ts"],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-misused-promises": "error",
+    },
+  },
 ]
